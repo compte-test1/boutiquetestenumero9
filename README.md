@@ -1,4 +1,3 @@
-# boutiquetestenumero9
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -167,7 +166,7 @@
                     <span>Total:</span>
                     <span id="cart-total">0 FCFA</span>
                 </div>
-                <button class="w-full bg-yellow-500 text-gray-900 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">Procéder au Paiement</button>
+                <button id="checkout-button" class="w-full bg-yellow-500 text-gray-900 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">Procéder au Paiement</button>
             </div>
         </div>
     </div>
@@ -195,6 +194,51 @@
             </div>
     </main>
 
+    <div id="payment-overlay" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">Informations de Commande</h2>
+            <form id="payment-form">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="firstName" class="block text-gray-300 text-sm font-bold mb-2">Prénom:</label>
+                        <input type="text" id="firstName" class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-700 text-white leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                    <div>
+                        <label for="lastName" class="block text-gray-300 text-sm font-bold mb-2">Nom:</label>
+                        <input type="text" id="lastName" class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-700 text-white leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="phoneNumber" class="block text-gray-300 text-sm font-bold mb-2">Numéro de Téléphone:</label>
+                    <input type="tel" id="phoneNumber" class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-700 text-white leading-tight focus:outline-none focus:shadow-outline" required pattern="[0-9]{9,}" title="Veuillez entrer un numéro de téléphone valide (au moins 9 chiffres)">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="city" class="block text-gray-300 text-sm font-bold mb-2">Ville:</label>
+                        <input type="text" id="city" class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-700 text-white leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                    <div>
+                        <label for="district" class="block text-gray-300 text-sm font-bold mb-2">Quartier:</label>
+                        <input type="text" id="district" class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-700 text-white leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="streetAddress" class="block text-gray-300 text-sm font-bold mb-2">Rue et Numéro:</label>
+                    <input type="text" id="streetAddress" class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-700 text-white leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Confirmer la Commande
+                    </button>
+                    <button type="button" id="cancel-payment" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <script>
         // --- Éléments du DOM ---
         const productsContainer = document.getElementById('products-container');
@@ -206,14 +250,20 @@
         const cartCount = document.getElementById('cart-count');
         const categoryFilter = document.getElementById('categoryFilter');
         const searchInput = document.getElementById('searchInput');
-        const searchInputMobile = document.getElementById('searchInputMobile'); // Pour mobile
+        const searchInputMobile = document.getElementById('searchInputMobile');
         const themeToggle = document.getElementById('theme-toggle');
         const moonIcon = document.getElementById('moon-icon');
         const sunIcon = document.getElementById('sun-icon');
         const toastContainer = document.getElementById('toast-container');
+        const checkoutButton = document.getElementById('checkout-button');
+        const paymentOverlay = document.getElementById('payment-overlay');
+        const paymentForm = document.getElementById('payment-form');
+        const cancelPaymentButton = document.getElementById('cancel-payment');
+
+        // --- Ton numéro WhatsApp pour recevoir les commandes ---
+        const WHATSAPP_NUMBER = '242064230404'; // N'oublie pas le code pays, sans le '+'
 
         // --- Données des produits et panier ---
-        // Charger les produits depuis localStorage ou utiliser les produits par défaut si localStorage est vide
         let products = JSON.parse(localStorage.getItem('shopProducts')) || [
             {
                 id: 1,
@@ -240,7 +290,7 @@
                 name: "Robe Cocktail Diamants",
                 price: 89000,
                 originalPrice: 120000,
-                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dc732eb3-2b4e-46f9-bca1-86c42649759c.png",
+                image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-bca1-86c42649759c.png",
                 category: "Robes",
                 rating: 4.9,
                 stock: 5
@@ -257,7 +307,6 @@
             }
         ];
 
-        // Charger le panier depuis localStorage
         let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
 
         // --- Fonctions de sauvegarde ---
@@ -270,17 +319,12 @@
         }
 
         // --- Fonctions utilitaires ---
-
-        // Fonction pour afficher un toast (notification)
         function showToast(message, duration = 3000) {
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.innerText = message;
             toastContainer.appendChild(toast);
-
-            // Force reflow for CSS transition
-            void toast.offsetWidth;
-
+            void toast.offsetWidth; // Force reflow
             toast.classList.add('show');
 
             setTimeout(() => {
@@ -298,7 +342,12 @@
 
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p class="text-gray-400 text-center py-12">Votre panier est vide</p>';
+                checkoutButton.disabled = true;
+                checkoutButton.classList.add('opacity-50', 'cursor-not-allowed');
             } else {
+                checkoutButton.disabled = false;
+                checkoutButton.classList.remove('opacity-50', 'cursor-not-allowed');
+
                 cart.forEach(item => {
                     const itemTotal = item.price * item.quantity;
                     total += itemTotal;
@@ -383,6 +432,77 @@
             });
         }
 
+        // --- Logique de Paiement/Commande ---
+        function processOrder() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const city = document.getElementById('city').value;
+            const district = document.getElementById('district').value;
+            const streetAddress = document.getElementById('streetAddress').value;
+
+            // Simple validation
+            if (!firstName || !lastName || !phoneNumber || !city || !district || !streetAddress) {
+                showToast("Veuillez remplir toutes les informations de livraison.", 4000);
+                return;
+            }
+
+            if (cart.length === 0) {
+                 showToast("Votre panier est vide. Impossible de passer commande.", 4000);
+                 return;
+            }
+
+            // Construire le message pour toi (le vendeur)
+            let orderMessage = `*Nouvelle Commande LUXURY SHOP* ✨\n\n`;
+            orderMessage += `*Client*: ${firstName} ${lastName}\n`;
+            orderMessage += `*Téléphone*: ${phoneNumber}\n`;
+            orderMessage += `*Adresse*: ${streetAddress}, ${district}, ${city}\n\n`;
+            orderMessage += `*Détails du Panier*:\n`;
+
+            let total = 0;
+            cart.forEach(item => {
+                orderMessage += `- ${item.name} x${item.quantity} (${item.price.toLocaleString()} FCFA/unité)\n`;
+                total += item.price * item.quantity;
+            });
+            orderMessage += `\n*Total de la Commande*: ${total.toLocaleString()} FCFA\n\n`;
+            orderMessage += `Merci de traiter cette commande rapidement !`;
+
+            // Encoder le message pour l'URL WhatsApp
+            const encodedMessage = encodeURIComponent(orderMessage);
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+            // Réduire le stock des produits commandés
+            cart.forEach(cartItem => {
+                const productIndex = products.findIndex(p => p.id === cartItem.id);
+                if (productIndex !== -1) {
+                    products[productIndex].stock -= cartItem.quantity;
+                    if (products[productIndex].stock < 0) {
+                        products[productIndex].stock = 0; // Assurer que le stock ne devienne pas négatif
+                    }
+                }
+            });
+            saveProducts(); // Sauvegarder les stocks mis à jour
+
+            // Vider le panier après "envoi" de la commande
+            cart = [];
+            saveCart(); // Sauvegarder le panier vide
+
+            // Masquer l'overlay de paiement et le panier
+            paymentOverlay.classList.add('hidden');
+            cartOverlay.classList.add('hidden');
+
+            // Ouvrir WhatsApp
+            window.open(whatsappUrl, '_blank'); // Ouvre dans un nouvel onglet/fenêtre
+
+            // Message de remerciement pour le client
+            showToast(`Merci ${firstName} ! Votre commande a été envoyée. Nous vous contacterons bientôt au ${phoneNumber}.`);
+
+            // Mettre à jour l'affichage des produits (pour refléter les stocks)
+            displayProducts();
+            // Mettre à jour l'affichage du panier (qui sera vide)
+            updateCart();
+        }
+
         // --- Écouteurs d'événements ---
 
         // Ouvrir le panier
@@ -401,6 +521,27 @@
                 cartOverlay.classList.add('hidden');
             }
         });
+
+        // Afficher l'overlay de paiement quand le bouton est cliqué
+        checkoutButton.addEventListener('click', () => {
+            if (cart.length > 0) {
+                paymentOverlay.classList.remove('hidden');
+            } else {
+                showToast("Votre panier est vide. Veuillez ajouter des articles avant de passer commande.", 4000);
+            }
+        });
+
+        // Gérer la soumission du formulaire de paiement (maintenant de commande)
+        paymentForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Empêche le rechargement de la page
+            processOrder();
+        });
+
+        // Annuler la commande
+        cancelPaymentButton.addEventListener('click', () => {
+            paymentOverlay.classList.add('hidden');
+        });
+
 
         // Ajouter au panier depuis la grille des produits
         productsContainer.addEventListener('click', (e) => {
@@ -438,7 +579,7 @@
                 const itemIndex = cart.findIndex(item => item.id == productId);
 
                 if (itemIndex !== -1) {
-                    const productInStock = products.find(p => p.id == productId); // Trouver le produit dans la liste originale
+                    const productInStock = products.find(p => p.id == productId);
 
                     if (action === 'increase') {
                         if (productInStock && cart[itemIndex].quantity < productInStock.stock) {
@@ -450,7 +591,7 @@
                     } else if (action === 'decrease') {
                         cart[itemIndex].quantity--;
                         if (cart[itemIndex].quantity <= 0) {
-                            const removedItemName = cart[itemIndex].name; // Sauvegarder le nom avant de supprimer
+                            const removedItemName = cart[itemIndex].name;
                             cart.splice(itemIndex, 1);
                             showToast(`"${removedItemName}" retiré du panier.`);
                         } else {
@@ -458,7 +599,7 @@
                         }
                     }
                     updateCart();
-                    displayProducts(); // Rafraîchit l'affichage des produits au cas où un stock change de 0
+                    displayProducts();
                 }
             }
 
@@ -470,7 +611,7 @@
                     cart = cart.filter(item => item.id != productId);
                     showToast(`"${itemToRemove ? itemToRemove.name : 'Cet article'}" a été retiré du panier.`);
                     updateCart();
-                    displayProducts(); // Rafraîchit l'affichage des produits au cas où un stock change de 0
+                    displayProducts();
                 }
             }
         });
@@ -508,21 +649,19 @@
 
         // --- Initialisation au chargement de la page ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Appliquer le thème sauvegardé
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
                 setDarkMode(false);
             } else {
-                setDarkMode(true); // Par défaut ou si 'dark'
+                setDarkMode(true);
             }
 
-            // Sauvegarder les produits initiaux si c'est la première fois (pour avoir le stock)
             if (!localStorage.getItem('shopProducts')) {
                 saveProducts();
             }
 
-            displayProducts(); // Affiche les produits
-            updateCart();      // Met à jour le panier
+            displayProducts();
+            updateCart();
         });
     </script>
 </body>
