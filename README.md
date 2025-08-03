@@ -68,3 +68,151 @@ export { db, auth, storage };
     <script type="module" src="script.js"></script>
   </body>
 </html>
+/* === RESET DE BASE === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Georgia', serif;
+}
+
+body {
+  background-color: #f9f9f9;
+  color: #1a1a1a;
+}
+
+/* === TOPBAR === */
+.topbar {
+  width: 100%;
+  background: linear-gradient(to right, #08213a, #0a2a4d);
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.language-select select {
+  background: #f0f0f0;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* === HERO BANNER === */
+.hero-banner {
+  background: url('assets/images/hero_background.jpg') center/cover no-repeat;
+  padding: 4rem 1rem;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+.hero-logo {
+  width: 120px;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #ddd;
+  margin-top: 0.5rem;
+}
+
+/* === SECTION PRODUITS === */
+.products-section {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  color: #08213a;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+}
+
+.product-image {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.product-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #0a2a4d;
+}
+
+.product-price {
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.badge-new {
+  background: #08213a;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+/* === FOOTER === */
+.site-footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 3rem;
+  background-color: #0a2a4d;
+}
+
+.settings-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  background: #f0f0f0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.settings-btn:hover {
+  background-color: #ddd;
+}
