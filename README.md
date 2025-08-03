@@ -1,35 +1,22 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NG_chopi_DIAMS</title>
-  <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-  <!-- 🔝 HEADER -->
-  <header class="header">
-    <div class="logo">NG_chopi_DIAMS</div>
-    <nav class="nav">
-      <a href="#">Accueil</a>
-      <a href="#">Boutique</a>
-      <a href="#">Panier</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
+// === firebase-config.js ===
 
-  <!-- 🖼 HERO SECTION -->
-  <section class="hero">
-    <h1>Découvre les tendances 2025</h1>
-    <p>Mode, style et originalité à petits prix !</p>
-    <a href="#" class="btn">Explorer la boutique</a>
-  </section>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js";
 
-  <!-- ✅ FOOTER -->
-  <footer class="footer">
-    <p>&copy; 2025 NG_chopi_DIAMS - Tous droits réservés.</p>
-  </footer>
+const firebaseConfig = {
+  apiKey: "AIzaSyA5nLBZ3E4t70TRj1woslLS6rIo5hrEoSY",
+  authDomain: "ng-chopi-diams-824fa.firebaseapp.com",
+  projectId: "ng-chopi-diams-824fa",
+  storageBucket: "ng-chopi-diams-824fa.firebasestorage.app",
+  messagingSenderId: "18876016875",
+  appId: "1:18876016875:web:ad2a6f936aae06096ff6ae"
+};
 
-  <script src="script.js"></script>
-</body>
-</html>
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const storage = getStorage(app);
+
+export { db, auth, storage };
