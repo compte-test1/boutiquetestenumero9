@@ -216,3 +216,80 @@ body {
 .settings-btn:hover {
   background-color: #ddd;
 }
+// === script.js ===
+
+// 1. Importation de Firebase
+import { db } from './firebase-config.js';
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy
+} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+// 2. Fonction pour charger les produits
+async function loadProducts() {
+  const productsRef = collection(db, 'products');
+  const q = query(productsRef, orderBy("name"));
+  const querySnapshot = await getDocs(q);
+
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = ""; // On vide avant d'ajouter
+
+  querySnapshot.forEach((doc) => {
+    const product = doc.data();
+
+    const card = document.createElement('div');
+    card.classList.add('product-card');
+
+    // Gestion de l'image de survol (hover)
+    const img = document.createElement('img');
+    img.className = 'product-image';
+    img.src = product.imageUrl;
+    img.alt = product.name;
+
+    if (product.hoverImageUrl) {
+      img.addEventListener('mouseover', () => {
+        img.src = product.hoverImageUrl;
+      });
+      img.addEventListener('mouseout', () => {
+        img.src = product.imageUrl;
+      });
+    }
+
+    const info = document.createElement('div');
+    info.className = 'product-info';
+
+    const name = document.createElement('div');
+    name.className = 'product-name';
+    name.textContent = product.name;
+
+    const price = document.createElement('div');
+    price.className = 'product-price';
+    if (product.flashSale?.isActive) {
+      price.innerHTML = `<span style="text-decoration: line-through; color: #888;">${product.originalPrice.toLocaleString()} FCFA</span>
+        <br><strong style="color: darkred">${product.flashSale.salePrice.toLocaleString()} FCFA</strong>`;
+    } else {
+      price.textContent = ${product.originalPrice.toLocaleString()} FCFA;
+    }
+
+    info.appendChild(name);
+    info.appendChild(price);
+
+    if (product.isNew) {
+      const badge = document.createElement('div');
+      badge.className = 'badge-new';
+      badge.textContent = 'Nouveau';
+      card.appendChild(badge);
+    }
+
+    card.appendChild(img);
+    card.appendChild(info);
+    grid.appendChild(card);
+  });
+}
+
+// 3. Détecte le chargement de la page
+window.addEventListener('DOMContentLoaded', () => {
+  loadProducts();
+});
