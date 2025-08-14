@@ -50,6 +50,11 @@
             border-radius: 10px;
             border: 2px solid #1a1a1a;
         }
+        .error-message {
+            background-color: #991b1b;
+            color: white;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="aristocrate-bg text-white flex items-center justify-center min-h-screen p-4">
@@ -283,6 +288,14 @@
                 loadingElement.remove();
             }
         }
+        
+        function showErrorMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'p-4 rounded-lg shadow-sm max-w-[85%] self-start error-message';
+            messageElement.innerHTML = `<strong>Erreur:</strong> ${message}`;
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
 
         // --- Logique du Chatbot ---
         function resetChat() {
@@ -343,9 +356,16 @@
             const payload = {
                 contents: chatState.chatHistory
             };
-            // --- ATTENTION: INSÉREZ VOTRE CLÉ API ICI POUR QUE LE CHATBOT FONCTIONNE SUR GITHUB PAGES ---
+            // --- REMPLACEZ CE TEXTE PAR VOTRE CLÉ API ---
             // Vous devez obtenir cette clé sur Google AI Studio.
-            const apiKey = "AIzaSyCjwSIiLt6suaQGnEQqurTJFNGahCIyZhE"; // <--- CLÉ API INSÉRÉE
+            const apiKey = "AIzaSyCjwSIiLt6suaQGnEQqurTJFNGahCIyZhE"; 
+
+            if (!apiKey) {
+                showErrorMessage("La clé API est manquante. Veuillez l'insérer dans le code.");
+                showLoading(false);
+                chatState.isAwaitingResponse = false;
+                return "Désolé, je ne peux pas me connecter sans la clé API.";
+            }
 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
@@ -355,6 +375,13 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error("Erreur de l'API:", response.status, response.statusText, errorText);
+                    showErrorMessage(`Connexion à l'API échouée. Erreur ${response.status}. Veuillez vérifier la console pour plus de détails.`);
+                    return null; // Return null to indicate a failure
+                }
                 
                 const result = await response.json();
                 
@@ -369,8 +396,9 @@
                 return botResponse;
 
             } catch (error) {
-                console.error("API call failed:", error);
-                return "Désolé, je rencontre des difficultés techniques. Veuillez réessayer plus tard.";
+                console.error("Erreur de l'appel API:", error);
+                showErrorMessage(`Une erreur est survenue. Veuillez vérifier la console pour plus de détails.`);
+                return null; // Return null to indicate a failure
             } finally {
                 showLoading(false);
                 chatState.isAwaitingResponse = false;
@@ -425,11 +453,13 @@
             }
 
             const botResponse = await getLLMResponse(botPrompt);
-            addMessage(botResponse, 'bot');
-            
-            // Si le bot a terminé la conversation, afficher le récapitulatif
-            if (botResponse.toLowerCase().includes('prêt à être envoyé') || botResponse.toLowerCase().includes('récapitulatif') || botResponse.toLowerCase().includes('terminons')) {
-                generateSummary();
+            // Only add the message if the API call was successful
+            if (botResponse) {
+                addMessage(botResponse, 'bot');
+                // If the bot has finished the conversation, display the summary
+                if (botResponse.toLowerCase().includes('prêt à être envoyé') || botResponse.toLowerCase().includes('récapitulatif') || botResponse.toLowerCase().includes('terminons')) {
+                    generateSummary();
+                }
             }
         }
 
