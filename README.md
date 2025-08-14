@@ -343,7 +343,10 @@
             const payload = {
                 contents: chatState.chatHistory
             };
-            const apiKey = "";
+            // --- ATTENTION: INSÉREZ VOTRE CLÉ API ICI POUR QUE LE CHATBOT FONCTIONNE SUR GITHUB PAGES ---
+            // Vous devez obtenir cette clé sur Google AI Studio.
+            const apiKey = "AIzaSyCjwSIiLt6suaQGnEQqurTJFNGahCIyZhE"; // <--- CLÉ API INSÉRÉE
+
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             try {
