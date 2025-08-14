@@ -20,7 +20,7 @@
             border-color: #ffd700;
         }
         .aristocrate-gold-text {
-            color: #ffd700; /* Gold */
+            color: #ffd700; /* Or */
         }
         .aristocrate-button {
             background-color: #ffd700;
@@ -70,7 +70,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7m-7 7v10a1 1 0 001 1h10a1 1 0 001-1v-2" />
                 </svg>
             </button>
-            <h1 class="text-4xl md:text-5xl font-bold aristocrate-gold-text">CSR buisiness</h1>
+            <h1 class="text-4xl md:text-5xl font-bold aristocrate-gold-text">CSR BUSINESS</h1>
             <p class="text-gray-400 mt-2">Design | Communication | Numérique</p>
         </header>
 
@@ -82,14 +82,14 @@
                 <h2 class="text-3xl font-bold mb-4">Bonjour !</h2>
                 <p class="text-gray-300 mb-6">Je suis votre assistant. Pour commencer, veuillez choisir l'un de nos services ci-dessous pour votre projet.</p>
                 <div id="service-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Service buttons will be inserted here by JavaScript -->
+                    <!-- Les boutons des services seront insérés ici par JavaScript -->
                 </div>
             </div>
 
-            <!-- Chat View (after service selection) -->
+            <!-- Chat View (après la sélection d'un service) -->
             <div id="chat-view" class="hidden flex flex-col h-[500px]">
                 <div id="chat-container" class="flex-grow p-4 space-y-4 chat-container rounded-lg bg-[#0e0e0e]">
-                    <!-- Chat messages will be added here -->
+                    <!-- Les messages de chat seront ajoutés ici -->
                 </div>
                 <div id="input-area" class="flex p-4 border-t border-gray-800 space-x-2">
                     <input type="text" id="user-input" placeholder="Tapez votre réponse ici..." class="flex-grow rounded-lg p-3 bg-[#1e1e1e] text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
@@ -102,7 +102,7 @@
                 <h2 class="text-3xl font-bold mb-4 aristocrate-gold-text">Demande Récapitulative</h2>
                 <p class="text-gray-300 mb-6">Merci ! Voici le résumé de votre demande. Veuillez cliquer sur le bouton ci-dessous pour nous l'envoyer sur WhatsApp.</p>
                 <div id="summary-details" class="bg-[#1e1e1e] p-6 rounded-lg text-left text-gray-200 mb-6 space-y-2">
-                    <!-- Summary details will be inserted here by JavaScript -->
+                    <!-- Les détails du résumé seront insérés ici par JavaScript -->
                 </div>
                 <a id="whatsapp-link" href="#" target="_blank" class="w-full inline-block aristocrate-button py-4 px-6 rounded-lg font-bold text-center">
                     Envoyer sur WhatsApp
@@ -117,6 +117,10 @@
         // Ce numéro WhatsApp recevra le récapitulatif de la demande.
         const WHATSAPP_NUMBER = '242067698030';
         
+        // Obtenez votre clé API sur Google AI Studio : https://aistudio.google.com/app/apikey
+        // REMPLACEZ 'VOTRE_CLE_API_ICI' par votre vraie clé API.
+        const API_KEY = "AIzaSyClNN5YQLhYmJHcB_6-PEhf6qeW5GTx-SA"; 
+
         // Liste de vos services et des questions initiales
         const services = {
             'logo-creation': { name: "Création de Logo", questions: [
@@ -356,18 +360,17 @@
             const payload = {
                 contents: chatState.chatHistory
             };
-            // --- REMPLACEZ CE TEXTE PAR VOTRE CLÉ API ---
-            // Vous devez obtenir cette clé sur Google AI Studio.
-            const apiKey = "AIzaSyCjwSIiLt6suaQGnEQqurTJFNGahCIyZhE"; 
 
-            if (!apiKey) {
-                showErrorMessage("La clé API est manquante. Veuillez l'insérer dans le code.");
+            if (API_KEY === "VOTRE_CLE_API_ICI" || !API_KEY) {
+                showErrorMessage("La clé API n'a pas été configurée. Veuillez remplacer le texte 'VOTRE_CLE_API_ICI' par votre vraie clé API dans le code.");
                 showLoading(false);
                 chatState.isAwaitingResponse = false;
-                return "Désolé, je ne peux pas me connecter sans la clé API.";
+                return null;
             }
 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+            
+            console.log("Envoi de la requête à l'API avec le prompt:", chatState.chatHistory);
 
             try {
                 let response = await fetchWithExponentialBackoff(apiUrl, {
@@ -380,17 +383,16 @@
                     const errorText = await response.text();
                     console.error("Erreur de l'API:", response.status, response.statusText, errorText);
                     showErrorMessage(`Connexion à l'API échouée. Erreur ${response.status}. Veuillez vérifier la console pour plus de détails.`);
-                    return null; // Return null to indicate a failure
+                    return null;
                 }
                 
                 const result = await response.json();
                 
-                let botResponse = 'Désolé, une erreur est survenue. Pourriez-vous reformuler ?';
+                let botResponse = "Désolé, une erreur est survenue. Pourriez-vous reformuler ?";
                 if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
                     botResponse = result.candidates[0].content.parts[0].text;
                 }
                 
-                // Add the bot's response to the chat history
                 chatState.chatHistory.push({ role: "model", parts: [{ text: botResponse }] });
 
                 return botResponse;
@@ -398,7 +400,7 @@
             } catch (error) {
                 console.error("Erreur de l'appel API:", error);
                 showErrorMessage(`Une erreur est survenue. Veuillez vérifier la console pour plus de détails.`);
-                return null; // Return null to indicate a failure
+                return null;
             } finally {
                 showLoading(false);
                 chatState.isAwaitingResponse = false;
@@ -412,15 +414,15 @@
                     if (response.status !== 429) {
                         return response;
                     }
-                    console.warn(`API rate limit exceeded. Retrying in ${delay / 1000}s...`);
+                    console.warn(`Limite de requêtes API dépassée. Nouvelle tentative dans ${delay / 1000}s...`);
                     await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2; // Exponential backoff
+                    delay *= 2;
                 } catch (error) {
-                    console.error("Fetch failed:", error);
+                    console.error("Échec de la récupération:", error);
                     throw error;
                 }
             }
-            throw new Error(`Failed to fetch after ${maxRetries} retries.`);
+            throw new Error(`Échec de la récupération après ${maxRetries} tentatives.`);
         }
 
         async function handleUserResponse() {
@@ -429,7 +431,6 @@
 
             addMessage(response, 'user');
             
-            // Stocker la réponse dans l'état du chatbot
             const questionsList = services[chatState.currentService].questions;
             const questionKey = questionsList[chatState.currentQuestionIndex] || `Réponse libre ${chatState.currentQuestionIndex}`;
             chatState.answers[questionKey] = response;
@@ -453,10 +454,8 @@
             }
 
             const botResponse = await getLLMResponse(botPrompt);
-            // Only add the message if the API call was successful
             if (botResponse) {
                 addMessage(botResponse, 'bot');
-                // If the bot has finished the conversation, display the summary
                 if (botResponse.toLowerCase().includes('prêt à être envoyé') || botResponse.toLowerCase().includes('récapitulatif') || botResponse.toLowerCase().includes('terminons')) {
                     generateSummary();
                 }
