@@ -1,506 +1,501 @@
-<!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agence de Services Graphiques</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        h1, h2 {
-            font-family: 'Playfair Display', serif;
-        }
-        .aristocrate-bg {
-            background-color: #0d0d0d;
-        }
-        .aristocrate-border {
-            border-color: #ffd700;
-        }
-        .aristocrate-gold-text {
-            color: #ffd700; /* Or */
-        }
-        .aristocrate-button {
-            background-color: #ffd700;
-            color: #0d0d0d;
-            transition: all 0.3s ease;
-        }
-        .aristocrate-button:hover {
-            background-color: #e6b800;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .chat-container {
-            max-height: 500px;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-        /* Custom scrollbar for elegance */
-        .chat-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        .chat-container::-webkit-scrollbar-track {
-            background: #1a1a1a;
-            border-radius: 10px;
-        }
-        .chat-container::-webkit-scrollbar-thumb {
-            background-color: #4a4a4a;
-            border-radius: 10px;
-            border: 2px solid #1a1a1a;
-        }
-        .error-message {
-            background-color: #991b1b;
-            color: white;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NG_chopi_DIAMS - Boutique de Luxe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="aristocrate-bg text-white flex items-center justify-center min-h-screen p-4">
-
-    <!-- Main Container -->
-    <div class="relative w-full max-w-2xl bg-black rounded-xl shadow-2xl overflow-hidden aristocrate-border border-4">
-        
-        <!-- Header -->
-        <header class="relative p-6 border-b-2 aristocrate-border text-center">
-            <!-- Bouton de retour à l'accueil -->
-            <button id="back-button" class="hidden absolute top-1/2 left-4 -translate-y-1/2 p-2 rounded-full hover:bg-gray-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7m-7 7v10a1 1 0 001 1h10a1 1 0 001-1v-2" />
-                </svg>
-            </button>
-            <h1 class="text-4xl md:text-5xl font-bold aristocrate-gold-text">CSR BUSINESS</h1>
-            <p class="text-gray-400 mt-2">Design | Communication | Numérique</p>
-        </header>
-
-        <!-- Chatbot Area -->
-        <div id="chatbot-main-area" class="p-6">
-            
-            <!-- Welcome View (Initial state) -->
-            <div id="welcome-view" class="text-center">
-                <h2 class="text-3xl font-bold mb-4">Bonjour !</h2>
-                <p class="text-gray-300 mb-6">Je suis votre assistant. Pour commencer, veuillez choisir l'un de nos services ci-dessous pour votre projet.</p>
-                <div id="service-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Les boutons des services seront insérés ici par JavaScript -->
-                </div>
-            </div>
-
-            <!-- Chat View (après la sélection d'un service) -->
-            <div id="chat-view" class="hidden flex flex-col h-[500px]">
-                <div id="chat-container" class="flex-grow p-4 space-y-4 chat-container rounded-lg bg-[#0e0e0e]">
-                    <!-- Les messages de chat seront ajoutés ici -->
-                </div>
-                <div id="input-area" class="flex p-4 border-t border-gray-800 space-x-2">
-                    <input type="text" id="user-input" placeholder="Tapez votre réponse ici..." class="flex-grow rounded-lg p-3 bg-[#1e1e1e] text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                    <button id="send-button" class="aristocrate-button px-6 py-3 rounded-lg font-bold">Envoyer</button>
-                </div>
-            </div>
-
-            <!-- Final Summary View -->
-            <div id="summary-view" class="hidden text-center p-6">
-                <h2 class="text-3xl font-bold mb-4 aristocrate-gold-text">Demande Récapitulative</h2>
-                <p class="text-gray-300 mb-6">Merci ! Voici le résumé de votre demande. Veuillez cliquer sur le bouton ci-dessous pour nous l'envoyer sur WhatsApp.</p>
-                <div id="summary-details" class="bg-[#1e1e1e] p-6 rounded-lg text-left text-gray-200 mb-6 space-y-2">
-                    <!-- Les détails du résumé seront insérés ici par JavaScript -->
-                </div>
-                <a id="whatsapp-link" href="#" target="_blank" class="w-full inline-block aristocrate-button py-4 px-6 rounded-lg font-bold text-center">
-                    Envoyer sur WhatsApp
-                </a>
-            </div>
-
-        </div>
+<body class="bg-gray-900 text-gray-100">
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-black via-gray-900 to-black border-b border-yellow-400 sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <h1 id="siteTitle" class="text-3xl font-bold gold-text">NG_chopi</h1>
+        <span id="siteSubtitle" class="text-yellow-400 font-semibold">DIAMS</span>
+      </div>
+      <nav class="hidden md:flex space-x-6">
+        <a href="#" id="navNew" class="text-gray-300 hover:text-yellow-400">Nouveautés</a>
+        <a href="#" id="navWomen" class="text-gray-300 hover:text-yellow-400">Femmes</a>
+        <a href="#" id="navMen" class="text-gray-300 hover:text-yellow-400">Hommes</a>
+        <a href="#" id="navCollection" class="text-yellow-400 font-bold">COLLECTION</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button id="settingsBtn" class="text-yellow-400 hover:text-yellow-300" title="Paramètres">⚙️</button>
+        <button id="adminBtn" class="text-yellow-400 hover:text-yellow-300" title="Admin">🛠️</button>
+        <button id="cartBtn" class="relative text-yellow-400 hover:text-yellow-300" title="Panier">🛒
+          <span id="cartCount" class="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold hidden">0</span>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <script>
-        // --- Configuration du Chatbot ---
-        // Ce numéro WhatsApp recevra le récapitulatif de la demande.
-        const WHATSAPP_NUMBER = '242067698030';
-        
-        // Obtenez votre clé API sur Google AI Studio : https://aistudio.google.com/app/apikey
-        // REMPLACEZ 'VOTRE_CLE_API_ICI' par votre vraie clé API.
-        const API_KEY = "AIzaSyClNN5YQLhYmJHcB_6-PEhf6qeW5GTx-SA"; 
+  <!-- Hero -->
+  <section class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black py-16 text-center">
+    <div class="container mx-auto px-4">
+      <h2 id="heroTitle" class="text-4xl md:text-5xl font-bold mb-4">COLLECTION EXCLUSIVE</h2>
+      <p id="heroSubtitle" class="text-xl mb-8">Articles de luxe à prix exceptionnels</p>
+      <button id="heroButton" class="bg-black text-yellow-400 px-8 py-3 rounded-full font-bold hover:bg-gray-900 transition">Découvrir</button>
+    </div>
+  </section>
 
-        // Liste de vos services et des questions initiales
-        const services = {
-            'logo-creation': { name: "Création de Logo", questions: [
-                "Quel est le nom de l'entreprise ou de la marque ?",
-                "Quel est son secteur d'activité ?",
-                "Avez-vous des préférences de style (minimaliste, classique, moderne, etc.) ?",
-                "Y a-t-il des couleurs spécifiques que vous souhaitez inclure ou éviter ?",
-                "Y a-t-il un slogan ou un texte additionnel à ajouter ?",
-                "Quel est votre public cible ?",
-                "Quels sont vos principaux concurrents ?",
-                "Avez-vous un budget approximatif pour ce projet ?",
-                "Souhaitez-vous un logo avec un symbole ou uniquement du texte ?",
-                "Dans quels contextes ce logo sera-t-il utilisé (web, impression, produits) ?",
-            ]},
-            'photo-editing': { name: "Montage Photo", questions: [
-                "Combien de photos souhaitez-vous faire retoucher ?",
-                "Quel type de retouche souhaitez-vous (ajustement de couleur, suppression d'objets, retouche de portrait, etc.) ?",
-                "Avez-vous un délai spécifique pour ce projet ?",
-                "Pouvez-vous nous donner un exemple de style que vous aimez ?",
-                "Les photos seront-elles utilisées pour un usage personnel ou professionnel ?",
-                "Quel est le format de fichier souhaité (JPEG, PNG, RAW) ?",
-                "Souhaitez-vous des retouches sur des photos de produits ?",
-                "Avez-vous des instructions particulières pour chaque photo ?",
-                "Le projet nécessite-t-il la création d'un montage photo, comme un collage ?",
-                "Avez-vous des images de référence à nous montrer ?",
-            ]},
-            'video-editing': { name: "Montage Vidéo", questions: [
-                "Quelle est la durée approximative de la vidéo finale ?",
-                "Quel est le but de la vidéo (publicité, événement personnel, réseaux sociaux) ?",
-                "Disposez-vous déjà des images brutes à utiliser ? (Si non, nous pouvons vous en proposer)",
-                "Souhaitez-vous de la musique de fond, des effets sonores, ou des animations ?",
-                "Quelle est la résolution vidéo souhaitée (HD, 4K) ?",
-                "Quel est votre public cible ?",
-                "Avez-vous un script ou un storyboard ?",
-                "Y a-t-il un appel à l'action que vous souhaitez inclure à la fin de la vidéo ?",
-                "Souhaitez-vous des sous-titres ou du texte incrusté ?",
-                "Avez-vous des exemples de vidéos que vous aimez ?",
-            ]},
-            'online-ad': { name: "Affiche de Vente en Ligne", questions: [
-                "Quel produit ou service voulez-vous promouvoir ?",
-                "Quel est le message principal que vous souhaitez communiquer (promo, nouveau produit, événement) ?",
-                "Avez-vous des images ou un texte spécifique à utiliser ?",
-                "Pour quelle plateforme de réseaux sociaux est destinée cette affiche ?",
-                "Avez-vous des éléments de marque (logo, couleurs) à intégrer ?",
-                "Quel est le format de l'affiche (story, post, bannière) ?",
-                "Quel est votre budget pour la création ?",
-                "Quel est le ton de la campagne (professionnel, amusant, chic) ?",
-                "Souhaitez-vous plusieurs variations de l'affiche ?",
-                "Y a-t-il une date limite pour la création de cette affiche ?",
-            ]},
-            'custom-wallpaper': { name: "Fond d'Écran Personnalisé", questions: [
-                "Pour quel appareil est le fond d'écran (téléphone, ordinateur, tablette, etc.) ?",
-                "Quel est le thème ou le style que vous désirez (nature, abstrait, science-fiction, etc.) ?",
-                "Avez-vous des images, des citations ou des couleurs spécifiques à inclure ?",
-                "Quel est le format d'image souhaité (portrait, paysage) ?",
-                "Souhaitez-vous un style minimaliste ou détaillé ?",
-                "Le fond d'écran est-il pour un usage personnel ou commercial ?",
-                "Avez-vous une résolution d'écran spécifique ?",
-                "Y a-t-il un message ou un nom à inclure ?",
-                "Voulez-vous des effets de profondeur ou de 3D ?",
-                "Avez-vous des images de référence à nous montrer ?",
-            ]},
-            'invitation-card': { name: "Carte d'Invitation", questions: [
-                "Pour quel événement est la carte (anniversaire, mariage, événement d'entreprise) ?",
-                "Combien d'invités sont attendus ?",
-                "Quelles informations doivent être incluses (date, lieu, heure, dress code) ?",
-                "Quel est le style de l'événement (formel, décontracté, festif) ?",
-                "Quel est le format de la carte (numérique, physique) ?",
-                "Avez-vous des photos à inclure ?",
-                "Souhaitez-vous un thème de couleur particulier ?",
-                "Avez-vous des préférences typographiques ?",
-                "Y a-t-il des informations de contact pour les RSVP ?",
-                "Avez-vous des exemples de cartes que vous aimez ?",
-            ]},
-            'business-publicity': { name: "Publicité pour votre Business", questions: [
-                "Quel est le nom de votre entreprise ?",
-                "Quel est le produit ou service à promouvoir ?",
-                "Sur quelles plateformes souhaitez-vous la publicité (réseaux sociaux, affichage, impression) ?",
-                "Quel est le public cible de cette publicité (âge, localisation, intérêts) ?",
-                "Quel est votre message principal ou slogan ?",
-                "Avez-vous des images, vidéos ou un texte à utiliser ?",
-                "Quel est le budget alloué à cette campagne ?",
-                "Quels sont les objectifs de cette publicité (notoriété, ventes, trafic) ?",
-                "Souhaitez-vous que nous gérions la diffusion de la publicité également ?",
-                "Y a-t-il des délais à respecter pour le lancement ?",
-            ]},
-            'business-card': { name: "Carte de Visite", questions: [
-                "Quel nom et titre voulez-vous inclure ?",
-                "Quelles sont les coordonnées complètes (téléphone, email, adresse, site web) ?",
-                "Avez-vous un logo ou des préférences de design ?",
-                "Souhaitez-vous un format spécifique (rectangulaire, carré, etc.) ?",
-                "Voulez-vous des informations additionnelles au dos de la carte ?",
-                "Quel est le style que vous recherchez (professionnel, créatif, élégant) ?",
-                "Y a-t-il des couleurs de marque à respecter ?",
-                "Souhaitez-vous une carte de visite avec un code QR ?",
-                "Combien d'exemplaires souhaitez-vous ?",
-                "Quel est le délai de livraison souhaité ?",
-            ]},
-            'custom-contract': { name: "Création de Contrat sur Mesure", questions: [
-                "Quel est le but du contrat (prestation de service, vente, location) ?",
-                "Quelles sont les parties impliquées ?",
-                "Y a-t-il des clauses spécifiques que vous souhaitez ajouter ?",
-                "Avez-vous des documents ou des informations de référence ?",
-                "S'agit-il d'un contrat pour une seule transaction ou une relation à long terme ?",
-                "Quelle est la juridiction applicable ?",
-                "Avez-vous besoin d'une clause de confidentialité ?",
-                "Y a-t-il des modalités de paiement ou des échéances à spécifier ?",
-                "Le contrat doit-il être rédigé en une ou plusieurs langues ?",
-                "Avez-vous besoin d'une traduction certifiée si nécessaire ?",
-            ]},
-        };
+  <!-- Produits -->
+  <section class="container mx-auto px-4 py-12">
+    <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
+  </section>
 
-        // --- Éléments du DOM ---
-        const welcomeView = document.getElementById('welcome-view');
-        const serviceButtonsContainer = document.getElementById('service-buttons');
-        const chatView = document.getElementById('chat-view');
-        const chatContainer = document.getElementById('chat-container');
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const summaryView = document.getElementById('summary-view');
-        const summaryDetails = document.getElementById('summary-details');
-        const whatsappLink = document.getElementById('whatsapp-link');
-        const backButton = document.getElementById('back-button');
+  <!-- Paramètres -->
+  <div id="settingsPanel" class="fixed inset-0 bg-gray-900 bg-opacity-90 z-50 hidden">
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-gray-800/90 border-l border-yellow-400 overflow-y-auto"
+         style="background-image: url('https://placehold.co/600x1000/111827/FFF?text=NG_chopi_DIAMS&font=montserrat'); background-blend-mode: overlay; background-size: cover;">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 id="settingsTitle" class="text-xl font-bold text-yellow-400">Paramètres</h2>
+          <button id="closeSettings" class="text-yellow-400 hover:text-yellow-300">✖️</button>
+        </div>
+        <div class="space-y-6">
+          <div>
+            <h3 id="languageLabel" class="text-lg font-semibold text-yellow-400 mb-3">Langue</h3>
+            <select id="languageSelector" class="w-full language-selector text-white rounded-lg px-4 py-2">
+              <option value="fr">Français</option>
+              <option value="en">English</option>
+              <option value="ln">Lingala</option>
+            </select>
+          </div>
+          <button id="adminAccessBtn" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-black py-3 rounded-lg font-bold">Accès Administrateur</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // --- État du Chatbot ---
-        let chatState = {
-            currentService: null,
-            currentQuestionIndex: -1,
-            answers: {},
-            chatHistory: [],
-            isAwaitingResponse: false,
-        };
+  <!-- Panier -->
+  <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden">
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-gray-900 border-l border-yellow-400 overflow-y-auto">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 id="cartTitle" class="text-xl font-bold text-yellow-400">Votre Panier</h2>
+          <button id="closeCart" class="text-yellow-400 hover:text-yellow-300">✖️</button>
+        </div>
+        <div id="cartItems" class="space-y-4 mb-6">
+          <p class="text-gray-400 text-center py-12" id="cartEmpty">Votre panier est vide</p>
+        </div>
+        <div class="border-t border-yellow-400/30 pt-6">
+          <div class="flex justify-between items-center mb-6">
+            <span id="cartTotalLabel" class="text-lg font-semibold">Total:</span>
+            <span id="cartTotal" class="text-xl font-bold gold-text">0 FCFA</span>
+          </div>
+          <div id="clientForm" class="hidden">
+            <div class="mb-4">
+              <label id="clientNameLabel" class="block text-yellow-400 mb-2">Nom et Prénom</label>
+              <input type="text" id="clientName" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" required />
+            </div>
+            <div class="mb-4">
+              <label id="clientPhoneLabel" class="block text-yellow-400 mb-2">Numéro de téléphone</label>
+              <input type="tel" id="clientPhone" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" required />
+            </div>
+            <div class="mb-4">
+              <label id="clientCityLabel" class="block text-yellow-400 mb-2">Ville</label>
+              <input type="text" id="clientCity" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" required />
+            </div>
+            <div class="mb-4">
+              <label id="clientNeighborhoodLabel" class="block text-yellow-400 mb-2">Quartier</label>
+              <input type="text" id="clientNeighborhood" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" required />
+            </div>
+            <div class="mb-6">
+              <label id="clientStreetLabel" class="block text-yellow-400 mb-2">Rue et Numéro</label>
+              <input type="text" id="clientStreet" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400" required />
+            </div>
+            <button id="confirmOrderBtn" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-bold hover:opacity-90 transition">Confirmer la commande</button>
+          </div>
+          <button id="validateOrderBtn" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-black py-3 rounded-lg font-bold hover:opacity-90 transition">Valider votre commande</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // --- Fonctions d'affichage ---
+  <!-- Espace Administrateur -->
+  <div id="adminPanel" class="fixed inset-0 bg-gray-900 z-50 overflow-y-auto hidden">
+    <div class="container mx-auto px-4 py-12">
+      <div class="flex justify-between items-center mb-12">
+        <h1 id="adminPanelTitle" class="text-3xl font-bold gold-text">Panel d'Administration</h1>
+        <button id="closeAdmin" class="text-yellow-400 hover:text-yellow-300 px-4 py-2 border border-yellow-400 rounded-lg">Fermer</button>
+      </div>
+      <div class="bg-gray-800 rounded-lg p-6 mb-8">
+        <h2 id="productManagementTitle" class="text-xl font-bold text-yellow-400 mb-4">Gestion des Produits</h2>
+        <button id="addProductBtn" class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold mb-4">Nouveau produit</button>
+        <form id="adminProductForm" class="mb-6">
+          <input type="hidden" id="productId" />
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label id="productNameLabel" class="block text-yellow-400 mb-2">Nom du produit</label>
+              <input type="text" id="productName" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2" required />
+            </div>
+            <div>
+              <label id="productCategoryLabel" class="block text-yellow-400 mb-2">Catégorie</label>
+              <select id="productCategory" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2" required>
+                <option value="Robes">Robes</option>
+                <option value="Hauts">Hauts</option>
+                <option value="Accessoires">Accessoires</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label id="productPriceLabel" class="block text-yellow-400 mb-2">Prix (FCFA)</label>
+              <input type="number" id="productPrice" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2" required />
+            </div>
+            <div>
+              <label id="productOriginalPriceLabel" class="block text-yellow-400 mb-2">Prix original</label>
+              <input type="number" id="productOriginalPrice" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2" required />
+            </div>
+          </div>
+          <div class="mb-4">
+            <label id="productImageLabel" class="block text-yellow-400 mb-2">URL de l'image</label>
+            <input type="text" id="productImage" class="w-full bg-gray-800 border border-yellow-400/30 rounded-lg px-4 py-2 mb-2" required />
+          </div>
+          <div class="flex space-x-3">
+            <button id="saveProductBtn" type="submit" class="bg-yellow-400 text-black px-6 py-2 rounded-lg font-bold">Enregistrer</button>
+            <button id="cancelEdit" type="button" class="bg-gray-700 text-white px-6 py-2 rounded-lg font-bold">Annuler</button>
+          </div>
+        </form>
+        <div class="bg-gray-900 rounded-lg p-4 mb-4">
+          <h3 id="productListTitle" class="text-lg font-semibold text-yellow-400 mb-3">Liste des produits</h3>
+          <div id="adminProductsList" class="space-y-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        function renderServiceButtons() {
-            serviceButtonsContainer.innerHTML = '';
-            for (const key in services) {
-                const service = services[key];
-                const button = document.createElement('button');
-                button.className = 'aristocrate-button px-6 py-4 rounded-lg font-bold text-lg';
-                button.textContent = service.name;
-                button.dataset.serviceKey = key;
-                button.addEventListener('click', () => startChat(key));
-                serviceButtonsContainer.appendChild(button);
-            }
-        }
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// --------- Données Produits ---------
+let products = [
+  {
+    id: 1,
+    name: "Robe de Soirée Élégante",
+    price: 75000,
+    originalPrice: 95000,
+    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4f6e42aa-1393-409a-8d75-35dc173309c3.png",
+    category: "Robes",
+    rating: 4.8,
+  },
+  {
+    id: 2,
+    name: "Top Couture Premium",
+    price: 45000,
+    originalPrice: 65000,
+    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a1a416cf-2ed9-4826-b0fe-b0bf9ac24fba.png",
+    category: "Hauts",
+    rating: 4.6,
+  },
+  {
+    id: 3,
+    name: "Robe Cocktail Diamants",
+    price: 89000,
+    originalPrice: 120000,
+    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dc732eb3-2b4e-46f9-bca1-86c42649759c.png",
+    category: "Robes",
+    rating: 4.9,
+  },
+  {
+    id: 4,
+    name: "Montre Prestige Or",
+    price: 125000,
+    originalPrice: 180000,
+    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/58eefe4f-a865-4b1a-b96a-89a1659638b2.png",
+    category: "Accessoires",
+    rating: 5.0,
+  },
+];
 
-        function addMessage(message, sender = 'bot') {
-            const messageElement = document.createElement('div');
-            messageElement.className = `p-4 rounded-lg shadow-sm max-w-[85%] ${sender === 'bot' ? 'bg-gray-800 self-start text-gray-200' : 'bg-yellow-400 text-black self-end'}`;
-            messageElement.textContent = message;
-            chatContainer.appendChild(messageElement);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
+// --------- Panier ---------
+let cart = [];
 
-        function showLoading(show = true) {
-            const loadingMessageId = 'loading-message';
-            let loadingElement = document.getElementById(loadingMessageId);
-            
-            if (show && !loadingElement) {
-                loadingElement = document.createElement('div');
-                loadingElement.id = loadingMessageId;
-                loadingElement.className = 'p-4 rounded-lg shadow-sm max-w-[85%] bg-gray-800 self-start text-gray-400 animate-pulse';
-                loadingElement.textContent = "L'assistant réfléchit...";
-                chatContainer.appendChild(loadingElement);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            } else if (!show && loadingElement) {
-                loadingElement.remove();
-            }
-        }
-        
-        function showErrorMessage(message) {
-            const messageElement = document.createElement('div');
-            messageElement.className = 'p-4 rounded-lg shadow-sm max-w-[85%] self-start error-message';
-            messageElement.innerHTML = `<strong>Erreur:</strong> ${message}`;
-            chatContainer.appendChild(messageElement);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
+// --------- Affichage Produits ---------
+function displayProducts() {
+  const container = document.getElementById('productsContainer');
+  container.innerHTML = '';
+  products.forEach(product => {
+    const discount = Math.round((1 - product.price / product.originalPrice) * 100);
+    const div = document.createElement('div');
+    div.className = 'bg-gray-800 rounded-xl overflow-hidden border border-yellow-400/20 product-card transition duration-300';
+    div.innerHTML = `
+      <div class="relative">
+        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover" />
+        ${discount > 0 ? `<span class="absolute top-3 left-3 bg-yellow-400 text-black px-2 py-1 rounded text-xs font-bold">-${discount}%</span>` : ''}
+      </div>
+      <div class="p-4">
+        <h3 class="font-semibold mb-2">${product.name}</h3>
+        <div class="flex items-center mb-3">
+          ${Array(5).fill().map((_, i) => `<svg class="w-4 h-4 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-600'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join('')}
+          <span class="text-xs text-gray-400 ml-2">${product.rating}</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-yellow-400 font-bold">${product.price.toLocaleString()} FCFA</p>
+            ${product.price < product.originalPrice ? `<p class="text-gray-500 text-sm line-through">${product.originalPrice.toLocaleString()} FCFA</p>` : ''}
+          </div>
+          <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded text-sm add-to-cart" data-id="${product.id}">Ajouter</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
 
-        // --- Logique du Chatbot ---
-        function resetChat() {
-            // Réinitialise l'état du chat
-            chatState = {
-                currentService: null,
-                currentQuestionIndex: -1,
-                answers: {},
-                chatHistory: [],
-                isAwaitingResponse: false,
-            };
+// --------- Mise à jour Panier ---------
+function updateCart() {
+  const cartItems = document.getElementById('cartItems');
+  cartItems.innerHTML = '';
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<p class="text-gray-400 text-center py-12">Votre panier est vide</p>';
+    document.getElementById('cartCount').classList.add('hidden');
+    document.getElementById('cartTotal').textContent = '0 FCFA';
+    return;
+  }
+  document.getElementById('cartCount').classList.remove('hidden');
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+    const div = document.createElement('div');
+    div.className = 'flex justify-between items-center';
+    div.innerHTML = `<span>${item.name} (x${item.quantity})</span><span>${(item.price * item.quantity).toLocaleString()} FCFA</span>`;
+    cartItems.appendChild(div);
+  });
+  document.getElementById('cartCount').textContent = cart.length;
+  document.getElementById('cartTotal').textContent = total.toLocaleString() + ' FCFA';
+}
 
-            // Masque toutes les vues et n'affiche que la page d'accueil
-            welcomeView.classList.remove('hidden');
-            chatView.classList.add('hidden');
-            summaryView.classList.add('hidden');
+// --------- Evenements Produits / Panier ---------
+document.getElementById('productsContainer').addEventListener('click', (e) => {
+  if (e.target.classList.contains('add-to-cart')) {
+    const productId = parseInt(e.target.getAttribute('data-id'));
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    const cartItem = cart.find(item => item.id === productId);
+    if (cartItem) {
+      cartItem.quantity++;
+    } else {
+      cart.push({...product, quantity: 1});
+    }
+    updateCart();
+  }
+});
+document.getElementById('cartBtn').addEventListener('click', () => {
+  document.getElementById('cartOverlay').classList.remove('hidden');
+  updateCart();
+});
+document.getElementById('closeCart').addEventListener('click', () => {
+  document.getElementById('cartOverlay').classList.add('hidden');
+});
+document.getElementById('validateOrderBtn').addEventListener('click', () => {
+  document.getElementById('validateOrderBtn').classList.add('hidden');
+  document.getElementById('clientForm').classList.remove('hidden');
+});
+document.getElementById('confirmOrderBtn').addEventListener('click', () => {
+  const clientName = document.getElementById('clientName').value.trim();
+  const clientPhone = document.getElementById('clientPhone').value.trim();
+  const clientCity = document.getElementById('clientCity').value.trim();
+  const clientNeighborhood = document.getElementById('clientNeighborhood').value.trim();
+  const clientStreet = document.getElementById('clientStreet').value.trim();
+  if (!clientName || !clientPhone || !clientCity || !clientNeighborhood || !clientStreet) {
+    alert("Veuillez remplir tous les champs du formulaire");
+    return;
+  }
+  if (cart.length === 0) {
+    alert("Votre panier est vide");
+    return;
+  }
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const orderDetails = cart.map(item => `• ${item.name} (x${item.quantity}) - ${(item.price * item.quantity).toLocaleString()} FCFA`).join('\n');
+  const message = `🌟 Nouvelle commande NG_chopi_DIAMS 🌟\n\nCOMMANDE PREMIUM:\n${orderDetails}\n\nTOTAL: ${total.toLocaleString()} FCFA\n\nCLIENT:\nNom: ${clientName}\nTéléphone: ${clientPhone}\nAdresse: ${clientCity}, ${clientNeighborhood}, ${clientStreet}\n\nMerci pour votre commande !`;
+  const whatsappUrl = `https://wa.me/242064230404?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, '_blank');
+  cart = [];
+  updateCart();
+  document.getElementById('clientForm').classList.add('hidden');
+  document.getElementById('validateOrderBtn').classList.remove('hidden');
+  document.getElementById('cartOverlay').classList.add('hidden');
+});
 
-            // Masque le bouton de retour
-            backButton.classList.add('hidden');
+// --------- Admin ---------
+document.getElementById('adminBtn').addEventListener('click', () => {
+  const code = prompt("Entrez le code d'accès à l'espace administrateur:");
+  if (code === "@inganibirds2007") {
+    document.getElementById('adminPanel').classList.remove('hidden');
+    loadAdminProducts();
+  } else {
+    alert("Code incorrect !");
+  }
+});
+document.getElementById('closeAdmin').addEventListener('click', () => {
+  document.getElementById('adminPanel').classList.add('hidden');
+});
+document.getElementById('addProductBtn').addEventListener('click', resetAdminForm);
+document.getElementById('cancelEdit').addEventListener('click', resetAdminForm);
+document.getElementById('adminProductForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const id = document.getElementById('productId').value;
+  const name = document.getElementById('productName').value.trim();
+  const price = parseInt(document.getElementById('productPrice').value);
+  const originalPrice = parseInt(document.getElementById('productOriginalPrice').value);
+  const image = document.getElementById('productImage').value.trim();
+  const category = document.getElementById('productCategory').value;
+  if (!name || !price || !originalPrice || !image || !category) {
+    alert("Veuillez remplir tous les champs");
+    return;
+  }
+  if (id) {
+    const index = products.findIndex(p => p.id == id);
+    if (index !== -1) {
+      products[index] = { id: Number(id), name, price, originalPrice, image, category, rating: 4.5 };
+    }
+  } else {
+    products.push({ id: Date.now(), name, price, originalPrice, image, category, rating: 4.5 });
+  }
+  resetAdminForm();
+  loadAdminProducts();
+  displayProducts();
+});
+function resetAdminForm() {
+  document.getElementById('productId').value = '';
+  document.getElementById('productName').value = '';
+  document.getElementById('productPrice').value = '';
+  document.getElementById('productOriginalPrice').value = '';
+  document.getElementById('productImage').value = '';
+  document.getElementById('productCategory').value = 'Robes';
+}
+function loadAdminProducts() {
+  const container = document.getElementById('adminProductsList');
+  container.innerHTML = '';
+  products.forEach(product => {
+    const div = document.createElement('div');
+    div.className = 'flex justify-between items-center bg-gray-800 p-3 rounded-lg';
+    div.innerHTML = `
+      <div>
+        <h4 class="font-medium">${product.name}</h4>
+        <p class="text-sm text-yellow-400">${product.price.toLocaleString()} FCFA</p>
+      </div>
+      <div class="flex space-x-2">
+        <button class="admin-edit-btn text-yellow-400 hover:text-yellow-300" data-id="${product.id}">✏️</button>
+        <button class="admin-delete-btn text-red-400 hover:text-red-300" data-id="${product.id}">🗑️</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+document.getElementById('adminProductsList').addEventListener('click', e => {
+  if (e.target.classList.contains('admin-edit-btn')) {
+    const id = parseInt(e.target.getAttribute('data-id'));
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+    document.getElementById('productId').value = product.id;
+    document.getElementById('productName').value = product.name;
+    document.getElementById('productPrice').value = product.price;
+    document.getElementById('productOriginalPrice').value = product.originalPrice;
+    document.getElementById('productImage').value = product.image;
+    document.getElementById('productCategory').value = product.category;
+  }
+  if (e.target.classList.contains('admin-delete-btn')) {
+    const id = parseInt(e.target.getAttribute('data-id'));
+    if (confirm("Voulez-vous vraiment supprimer ce produit ?")) {
+      products = products.filter(p => p.id !== id);
+      loadAdminProducts();
+      displayProducts();
+    }
+  }
+});
 
-            // Vide le conteneur du chat
-            chatContainer.innerHTML = '';
+// --------- Paramètres ---------
+document.getElementById('settingsBtn').addEventListener('click', () => {
+  document.getElementById('settingsPanel').classList.remove('hidden');
+});
+document.getElementById('closeSettings').addEventListener('click', () => {
+  document.getElementById('settingsPanel').classList.add('hidden');
+});
+document.getElementById('adminAccessBtn').addEventListener('click', () => {
+  document.getElementById('settingsPanel').classList.add('hidden');
+  const code = prompt("Entrez le code d'accès à l'espace administrateur:");
+  if (code === "@inganibirds2007") {
+    document.getElementById('adminPanel').classList.remove('hidden');
+    loadAdminProducts();
+  } else {
+    alert("Code incorrect !");
+  }
+});
 
-            // S'assure que les boutons des services sont bien affichés
-            renderServiceButtons();
-        }
+// --------- Multilingue ---------
+const translations = {
+  fr: {
+    siteTitle: "NG_chopi",
+    siteSubtitle: "DIAMS",
+    navNew: "Nouveautés",
+    navWomen: "Femmes",
+    navMen: "Hommes",
+    navCollection: "COLLECTION",
+    heroTitle: "COLLECTION EXCLUSIVE",
+    heroSubtitle: "Articles de luxe à prix exceptionnels",
+    heroButton: "Découvrir",
+    cartEmpty: "Votre panier est vide",
+    cartTotalLabel: "Total:",
+    validateOrderBtn: "Valider votre commande",
+    confirmOrderBtn: "Confirmer la commande",
+    settingsTitle: "Paramètres",
+    languageLabel: "Langue",
+    adminAccessBtn: "Accès Administrateur",
+    cartTitle: "Votre Panier",
+    adminPanelTitle: "Panel d'Administration",
+    productManagementTitle: "Gestion des Produits",
+    productNameLabel: "Nom du produit",
+    productCategoryLabel: "Catégorie",
+    productPriceLabel: "Prix (FCFA)",
+    productOriginalPriceLabel: "Prix original",
+    productImageLabel: "URL de l'image",
+    saveBtn: "Enregistrer",
+    cancelBtn: "Annuler",
+    productListTitle: "Liste des produits",
+  },
+  en: { /* ... comme avant ... */ },
+  ln: { /* ... comme avant ... */ }
+};
+function updateLanguage(lang) {
+  document.getElementById('siteTitle').textContent = translations[lang].siteTitle;
+  document.getElementById('siteSubtitle').textContent = translations[lang].siteSubtitle;
+  document.getElementById('navNew').textContent = translations[lang].navNew;
+  document.getElementById('navWomen').textContent = translations[lang].navWomen;
+  document.getElementById('navMen').textContent = translations[lang].navMen;
+  document.getElementById('navCollection').textContent = translations[lang].navCollection;
+  document.getElementById('heroTitle').textContent = translations[lang].heroTitle;
+  document.getElementById('heroSubtitle').textContent = translations[lang].heroSubtitle;
+  document.getElementById('heroButton').textContent = translations[lang].heroButton;
+  document.getElementById('cartEmpty').textContent = translations[lang].cartEmpty;
+  document.getElementById('cartTotalLabel').textContent = translations[lang].cartTotalLabel;
+  document.getElementById('validateOrderBtn').textContent = translations[lang].validateOrderBtn;
+  document.getElementById('confirmOrderBtn').textContent = translations[lang].confirmOrderBtn;
+  document.getElementById('settingsTitle').textContent = translations[lang].settingsTitle;
+  document.getElementById('languageLabel').textContent = translations[lang].languageLabel;
+  document.getElementById('adminAccessBtn').textContent = translations[lang].adminAccessBtn;
+  document.getElementById('cartTitle').textContent = translations[lang].cartTitle;
+  document.getElementById('adminPanelTitle').textContent = translations[lang].adminPanelTitle;
+  document.getElementById('productManagementTitle').textContent = translations[lang].productManagementTitle;
+  document.getElementById('productNameLabel').textContent = translations[lang].productNameLabel;
+  document.getElementById('productCategoryLabel').textContent = translations[lang].productCategoryLabel;
+  document.getElementById('productPriceLabel').textContent = translations[lang].productPriceLabel;
+  document.getElementById('productOriginalPriceLabel').textContent = translations[lang].productOriginalPriceLabel;
+  document.getElementById('productImageLabel').textContent = translations[lang].productImageLabel;
+  document.getElementById('saveProductBtn').textContent = translations[lang].saveBtn;
+  document.getElementById('cancelEdit').textContent = translations[lang].cancelBtn;
+  document.getElementById('productListTitle').textContent = translations[lang].productListTitle;
+}
+document.getElementById('languageSelector').addEventListener('change', e => {
+  updateLanguage(e.target.value);
+});
 
-        function startChat(serviceKey) {
-            resetChat(); // S'assure de réinitialiser avant de commencer un nouveau chat
-            
-            chatState.currentService = serviceKey;
-            chatState.currentQuestionIndex = 0;
-            
-            welcomeView.classList.add('hidden');
-            chatView.classList.remove('hidden');
-            backButton.classList.remove('hidden');
-
-            const serviceName = services[serviceKey].name;
-            const firstQuestion = services[serviceKey].questions[0];
-
-            // Initialiser l'historique du chat pour l'IA
-            const initialPrompt = `Bonjour, je suis votre assistant virtuel pour le service "${serviceName}". Je vais vous poser quelques questions pour mieux comprendre votre projet. À la fin, je vous préparerai un récapitulatif à envoyer à un de nos experts. Veuillez répondre brièvement. Première question : ${firstQuestion}`;
-            chatState.chatHistory.push({ role: "user", parts: [{ text: initialPrompt }] });
-
-            addMessage(`Excellent choix ! Vous avez sélectionné le service : ${serviceName}.`, 'bot');
-            addMessage(`Bonjour, je suis votre assistant virtuel pour le service "${serviceName}". Nous allons discuter de votre projet. Pour commencer : ${firstQuestion}`, 'bot');
-            userInput.focus();
-        }
-
-        async function getLLMResponse(prompt) {
-            if (chatState.isAwaitingResponse) return;
-            chatState.isAwaitingResponse = true;
-            showLoading(true);
-
-            // Add user prompt to history
-            chatState.chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-
-            const payload = {
-                contents: chatState.chatHistory
-            };
-
-            if (API_KEY === "VOTRE_CLE_API_ICI" || !API_KEY) {
-                showErrorMessage("La clé API n'a pas été configurée. Veuillez remplacer le texte 'VOTRE_CLE_API_ICI' par votre vraie clé API dans le code.");
-                showLoading(false);
-                chatState.isAwaitingResponse = false;
-                return null;
-            }
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
-            
-            console.log("Envoi de la requête à l'API avec le prompt:", chatState.chatHistory);
-
-            try {
-                let response = await fetchWithExponentialBackoff(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error("Erreur de l'API:", response.status, response.statusText, errorText);
-                    showErrorMessage(`Connexion à l'API échouée. Erreur ${response.status}. Veuillez vérifier la console pour plus de détails.`);
-                    return null;
-                }
-                
-                const result = await response.json();
-                
-                let botResponse = "Désolé, une erreur est survenue. Pourriez-vous reformuler ?";
-                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
-                    botResponse = result.candidates[0].content.parts[0].text;
-                }
-                
-                chatState.chatHistory.push({ role: "model", parts: [{ text: botResponse }] });
-
-                return botResponse;
-
-            } catch (error) {
-                console.error("Erreur de l'appel API:", error);
-                showErrorMessage(`Une erreur est survenue. Veuillez vérifier la console pour plus de détails.`);
-                return null;
-            } finally {
-                showLoading(false);
-                chatState.isAwaitingResponse = false;
-            }
-        }
-
-        async function fetchWithExponentialBackoff(url, options, maxRetries = 5, delay = 1000) {
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (response.status !== 429) {
-                        return response;
-                    }
-                    console.warn(`Limite de requêtes API dépassée. Nouvelle tentative dans ${delay / 1000}s...`);
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2;
-                } catch (error) {
-                    console.error("Échec de la récupération:", error);
-                    throw error;
-                }
-            }
-            throw new Error(`Échec de la récupération après ${maxRetries} tentatives.`);
-        }
-
-        async function handleUserResponse() {
-            const response = userInput.value.trim();
-            if (response === '' || chatState.isAwaitingResponse) return;
-
-            addMessage(response, 'user');
-            
-            const questionsList = services[chatState.currentService].questions;
-            const questionKey = questionsList[chatState.currentQuestionIndex] || `Réponse libre ${chatState.currentQuestionIndex}`;
-            chatState.answers[questionKey] = response;
-            
-            userInput.value = '';
-
-            const totalQuestionsAnswered = Object.keys(chatState.answers).length;
-            const isCheckPoint = (totalQuestionsAnswered === 8) || (totalQuestionsAnswered > 8 && (totalQuestionsAnswered - 8) % 4 === 0);
-
-            let botPrompt;
-            if (response.toLowerCase().includes('terminer') || response.toLowerCase().includes('stop')) {
-                generateSummary();
-                return;
-            } else if (isCheckPoint) {
-                botPrompt = `L'utilisateur a répondu à la question "${questionKey}" par "${response}". C'est le moment de lui demander s'il a assez d'informations et s'il souhaite finaliser la demande. Si oui, dites-lui que vous allez préparer le récapitulatif. Si non, continuez à poser des questions pour affiner la demande.`;
-            } else if (chatState.currentQuestionIndex < questionsList.length - 1) {
-                chatState.currentQuestionIndex++;
-                botPrompt = `L'utilisateur a répondu à la question "${questionKey}" par "${response}". Posez la question suivante de manière concise : "${questionsList[chatState.currentQuestionIndex]}"`;
-            } else {
-                botPrompt = `L'utilisateur a répondu à toutes les questions de la liste. Sa dernière réponse est : "${response}". Posez une question libre pour obtenir plus de détails, ou proposez de finaliser le récapitulatif.`;
-            }
-
-            const botResponse = await getLLMResponse(botPrompt);
-            if (botResponse) {
-                addMessage(botResponse, 'bot');
-                if (botResponse.toLowerCase().includes('prêt à être envoyé') || botResponse.toLowerCase().includes('récapitulatif') || botResponse.toLowerCase().includes('terminons')) {
-                    generateSummary();
-                }
-            }
-        }
-
-
-        function generateSummary() {
-            chatView.classList.add('hidden');
-            summaryView.classList.remove('hidden');
-            
-            const serviceName = services[chatState.currentService].name;
-            let summaryHTML = `<p><strong>Service demandé :</strong> ${serviceName}</p><hr class="my-2 border-gray-700">`;
-            let whatsappMessage = `*Nouvelle demande de service : ${serviceName}* ✨\n\n`;
-
-            for (const question in chatState.answers) {
-                const answer = chatState.answers[question];
-                summaryHTML += `<p><strong>${question}</strong><br>${answer}</p>`;
-                whatsappMessage += `*${question}*\n${answer}\n\n`;
-            }
-
-            summaryHTML += `<p class="mt-4">Un de nos experts vous répondra dans les plus brefs délais.</p>`;
-            summaryDetails.innerHTML = summaryHTML;
-            
-            const encodedMessage = encodeURIComponent(whatsappMessage);
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-            whatsappLink.href = whatsappUrl;
-            
-            backButton.classList.remove('hidden');
-        }
-
-        // --- Écouteurs d'événements ---
-        sendButton.addEventListener('click', handleUserResponse);
-        userInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                handleUserResponse();
-            }
-        });
-
-        backButton.addEventListener('click', resetChat);
-
-        // Initialisation de la page
-        document.addEventListener('DOMContentLoaded', () => {
-            renderServiceButtons();
-        });
-    </script>
+// --------- Initialisation ---------
+displayProducts();
+updateCart();
+updateLanguage('fr');
+});
+</script>
 </body>
 </html>
