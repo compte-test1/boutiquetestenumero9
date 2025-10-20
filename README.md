@@ -1,319 +1,444 @@
-// ----------------------- src/index.js -----------------------
-import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import "./index.css";
+<title>Agence de Services Graphiques</title> <script src="https://cdn.tailwindcss.com"></script> <style> @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap') ; corps { font-family : 'Inter', sans-serif ; } h1, h2 { font-family : 'Playfair Display', serif ; } .aristocrate-bg { couleur de fond : #0d0d0d ; } .aristocrate-border { bordure-couleur : #ffd700 ; } .aristocrate-gold-text { couleur : #ffd700 ; /*Ou*/ } .aristocrate-button { couleur d’arrière-plan : #ffd700 ; couleur : #0d0d0d ; transition : tous les 0,3 s d’aisance ; } .aristocrate-button :survol { couleur de fond : #e6b800 ; transform : translateY(-2px) ; box-shadow : 0 4px 6px rgba(0, 0, 0, 0.1) ; } .chat-container { hauteur maximale : 500px ; débordement-y : auto ; comportement de défilement : lisse ; } /* Barre de défilement personnalisée pour plus d’élégance */ .chat-container ::-webkit-scrollbar { Largeur : 8px ; } .chat-container ::-webkit-scrollbar-track { Contexte : #1a1a1a ; rayon de bordure : 10px ; } .chat-container ::-webkit-scrollbar-thumb { couleur de fond : #4a4a4a ; rayon de bordure : 10px ; bordure : 2px #1a1a1a solide ; } .message_erreur { couleur d’arrière-plan : #991b1b ; couleur : blanc ; poids de la police : gras ; } </style >
+<!-- Main Container -->
+<div class="relative w-full max-w-2xl bg-black rounded-xl shadow-2xl overflow-hidden aristocrate-border border-4">
+    
+    <!-- Header -->
+    <header class="relative p-6 border-b-2 aristocrate-border text-center">
+        <!-- Bouton de retour à l'accueil -->
+        <button id="back-button" class="hidden absolute top-1/2 left-4 -translate-y-1/2 p-2 rounded-full hover:bg-gray-800 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7m-7 7v10a1 1 0 001 1h10a1 1 0 001-1v-2" />
+            </svg>
+        </button>
+        <h1 class="text-4xl md:text-5xl font-bold aristocrate-gold-text">CSR BUSINESS</h1>
+        <p class="text-gray-400 mt-2">Design | Communication | Numérique</p>
+    </header>
 
-const container = document.getElementById("root");
-const root = createRoot(container);
-root.render(<App />);
-
-// ----------------------- src/index.css -----------------------
-:root{
-  --primary:#111822;
-  --secondary:#333740;
-  --neutral:#6C6A6A;
-  --brownDark:#4F362A;
-  --brownSoft:#745850;
-  --gold:#F3B699;
-  --bg: var(--primary);
-  --text: #ffffff;
-}
-
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter, Poppins, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
-body{background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
-.container{max-width:1100px;margin:24px auto;padding:16px;}
-.card{background:var(--secondary);border-radius:16px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,0.6);}
-.btn{background:var(--gold);color:var(--primary);padding:10px 18px;border-radius:12px;border:none;font-weight:600;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,0.4);}
-.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,0.6);}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:linear-gradient(180deg,var(--primary),#0f1418);border-bottom:1px solid rgba(255,255,255,0.03);}
-.nav .brand{color:var(--gold);font-weight:800;font-size:20px;letter-spacing:0.6px;}
-.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:18px;}
-.product img{width:100%;height:180px;object-fit:cover;border-radius:12px;}
-.product h3{color:var(--gold);margin:8px 0 4px;font-size:18px;}
-.small{color:var(--neutral);font-size:14px;}
-.cart-summary{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));padding:12px;border-radius:12px;}
-.footer{margin-top:28px;color:var(--neutral);text-align:center;font-size:13px;}
-
-// ----------------------- src/firebaseConfig.js -----------------------
-/*
-  Firebase configuration (déjà fourni).
-  Si tu veux activer Firebase Auth / Firestore / Storage, vérifie la console Firebase
-  et configure les règles / utilisateurs.
-*/
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA5nLBZ3E4t70TRj1woslLS6rIo5hrEoSY",
-  authDomain: "ng-chopi-diams-824fa.firebaseapp.com",
-  projectId: "ng-chopi-diams-824fa",
-  storageBucket: "ng-chopi-diams-824fa.firebasestorage.app",
-  messagingSenderId: "18876016875",
-  appId: "1:18876016875:web:ad2a6f936aae06096ff6ae"
-};
-
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const storage = getStorage(app);
-export default app;
-
-// ----------------------- src/i18n.js -----------------------
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-
-const resources = {
-  fr: { translation: {
-    welcome: "Bienvenue sur NG_chopi_DIAMS",
-    shopNow: "Acheter maintenant",
-    addToCart: "Ajouter au panier",
-    pay: "Payer par MoMo",
-    contact: "Contacter sur WhatsApp",
-    address: "Adresse de livraison",
-    adminLogin: "Connexion Admin",
-    cart: "Panier"
-  }},
-  en: { translation: {
-    welcome: "Welcome to NG_chopi_DIAMS",
-    shopNow: "Shop now",
-    addToCart: "Add to cart",
-    pay: "Pay with MoMo",
-    contact: "Contact on WhatsApp",
-    address: "Delivery address",
-    adminLogin: "Admin Login",
-    cart: "Cart"
-  }},
-  ln: { translation: {
-    welcome: "Boyei bolamu na NG_chopi_DIAMS",
-    shopNow: "Zua maki ya sikoyo",
-    addToCart: "Bakisa na panier",
-    pay: "Kobanda na MoMo",
-    contact: "Lobela na WhatsApp",
-    address: "Adresi ya kobakisa",
-    adminLogin: "Kokota na admin",
-    cart: "Panier"
-  }}
-};
-
-i18n.use(initReactI18next).init({
-  resources,
-  lng: "fr",
-  interpolation: { escapeValue: false }
-});
-export default i18n;
-
-// ----------------------- src/App.js -----------------------
-import React, { useState, useEffect } from "react";
-import "./i18n";
-import { useTranslation } from "react-i18next";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import Cart from "./pages/Cart";
-import Admin from "./pages/Admin";
-import ChatBot from "./components/ChatBot";
-
-function App(){
-  const { t } = useTranslation();
-  const [page, setPage] = useState("home");
-  useEffect(()=>{document.title="NG_chopi_DIAMS"},[]);
-
-  return (
-    <div className="min-h-screen" style={{background:"var(--primary)", color:"#fff"}}>
-      <Navbar setPage={setPage} />
-      <main className="container">
-        {page==="home" && <Home t={t} setPage={setPage} />}
-        {page==="cart" && <Cart t={t} setPage={setPage} />}
-        {page==="admin" && <Admin t={t} setPage={setPage} />}
-      </main>
-      <ChatBot />
-      <footer className="footer">© NG_chopi_DIAMS - Tous droits réservés</footer>
-    </div>
-  );
-}
-export default App;
-
-// ----------------------- src/components/Navbar.js -----------------------
-import React from "react";
-import { useTranslation } from "react-i18next";
-
-export default function Navbar({ setPage }){
-  const { i18n } = useTranslation();
-  return (
-    <nav className="nav">
-      <div className="brand" onClick={()=>setPage("home")}>NG_chopi_DIAMS</div>
-      <div style={{display:"flex",gap:12,alignItems:"center"}}>
-        <button className="btn" onClick={()=>setPage("cart")}>Panier</button>
-        <select defaultValue="fr" onChange={(e)=>i18n.changeLanguage(e.target.value)} style={{background:"transparent",color:"var(--gold)",border:"1px solid rgba(255,255,255,0.04)",padding:"6px 8px",borderRadius:8}}>
-          <option value="fr">FR</option>
-          <option value="en">EN</option>
-          <option value="ln">LN</option>
-        </select>
-        <button className="btn" onClick={()=>setPage("admin")} style={{background:"transparent",border:"1px solid var(--gold)",color:"var(--gold)"}}>Admin</button>
-      </div>
-    </nav>
-  );
-}
-
-// ----------------------- src/components/ChatBot.js -----------------------
-import React, { useState } from "react";
-
-export default function ChatBot(){
-  const [open,setOpen]=useState(false);
-  const [msg,setMsg]=useState("");
-  return (
-    <div style={{position:"fixed",right:18,bottom:18}}>
-      {open && (
-        <div className="card" style={{width:320}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <strong style={{color:"var(--gold)"}}>Support</strong>
-            <button onClick={()=>setOpen(false)} style={{background:"transparent",border:"none",color:"var(--neutral)"}}>×</button>
-          </div>
-          <div style={{marginTop:8}} className="small">Bonjour! Comment puis-je vous aider?</div>
-          <textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="Écrire..." style={{width:"100%",marginTop:8,borderRadius:8,padding:8,background:"#0e1418",color:"#fff",border:"1px solid rgba(255,255,255,0.03)"}}/>
-          <div style={{display:"flex",justifyContent:"flex-end",marginTop:8}}>
-            <button className="btn" onClick={()=>{ alert("Merci — le message n'est pas réellement envoyé dans cette version demo."); setMsg(""); }}>Envoyer</button>
-          </div>
+    <!-- Chatbot Area -->
+    <div id="chatbot-main-area" class="p-6">
+        
+        <!-- Welcome View (Initial state) -->
+        <div id="welcome-view" class="text-center">
+            <h2 class="text-3xl font-bold mb-4">Bonjour !</h2>
+            <p class="text-gray-300 mb-6">Je suis votre assistant. Pour commencer, veuillez choisir l'un de nos services ci-dessous pour votre projet.</p>
+            <div id="service-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Les boutons des services seront insérés ici par JavaScript -->
+            </div>
         </div>
-      )}
-      <button className="btn" onClick={()=>setOpen(s=>!s)}>{open?"Fermer":"Support"}</button>
-    </div>
-  );
-}
 
-// ----------------------- src/components/ProductCard.js -----------------------
-import React from "react";
-
-export default function ProductCard({product, onAdd}){
-  return (
-    <div className="product card">
-      <img src={product.image} alt={product.name} />
-      <h3>{product.name}</h3>
-      <div className="small">{product.desc}</div>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:8}}>
-        <strong>{product.price} FCFA</strong>
-        <button className="btn" onClick={()=>onAdd(product)}>Ajouter</button>
-      </div>
-    </div>
-  );
-}
-
-// ----------------------- src/pages/Home.js -----------------------
-import React, { useState } from "react";
-import ProductCard from "../components/ProductCard";
-
-const demoProducts = [
-  {id:"1",name:"Bracelet DIAMS", desc:"Bracelet artisanal élégant", price:12000, image:"https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800&q=80"},
-  {id:"2",name:"Collier LUX", desc:"Collier doré raffiné", price:45000, image:"https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"},
-  {id:"3",name:"Boucles STAR", desc:"Boucles discrètes pour soirée", price:8000, image:"https://images.unsplash.com/photo-1541534401786-6e0f5f7c60d6?w=800&q=80"}
-];
-
-export default function Home({t, setPage}){
-  const [cart, setCart] = useState([]);
-  function handleAdd(p){
-    setCart(prev=>[...prev,p]);
-    alert(p.name + " ajouté au panier");
-  }
-  return (
-    <div>
-      <header style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div>
-          <h1 style={{color:"var(--gold)"}}>{t("welcome")}</h1>
-          <p className="small">Boutique officielle NG_chopi_DIAMS</p>
+        <!-- Chat View (après la sélection d'un service) -->
+        <div id="chat-view" class="hidden flex flex-col h-[500px]">
+            <div id="chat-container" class="flex-grow p-4 space-y-4 chat-container rounded-lg bg-[#0e0e0e]">
+                <!-- Les messages de chat seront ajoutés ici -->
+            </div>
+            <div id="input-area" class="flex p-4 border-t border-gray-800 space-x-2">
+                <input type="text" id="user-input" placeholder="Tapez votre réponse ici..." class="flex-grow rounded-lg p-3 bg-[#1e1e1e] text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                <button id="send-button" class="aristocrate-button px-6 py-3 rounded-lg font-bold">Envoyer</button>
+            </div>
         </div>
-        <div className="card cart-summary">
-          <div>Panier: {cart.length} article(s)</div>
-          <div style={{marginTop:8}}>
-            <button className="btn" onClick={()=>setPage("cart")}>Voir le panier</button>
-          </div>
+
+        <!-- Final Summary View -->
+        <div id="summary-view" class="hidden text-center p-6">
+            <h2 class="text-3xl font-bold mb-4 aristocrate-gold-text">Demande Récapitulative</h2>
+            <p class="text-gray-300 mb-6">Merci ! Voici le résumé de votre demande. Veuillez cliquer sur le bouton ci-dessous pour nous l'envoyer sur WhatsApp.</p>
+            <div id="summary-details" class="bg-[#1e1e1e] p-6 rounded-lg text-left text-gray-200 mb-6 space-y-2">
+                <!-- Les détails du résumé seront insérés ici par JavaScript -->
+            </div>
+            <a id="whatsapp-link" href="#" target="_blank" class="w-full inline-block aristocrate-button py-4 px-6 rounded-lg font-bold text-center">
+                Envoyer sur WhatsApp
+            </a>
         </div>
-      </header>
 
-      <section className="products" style={{marginTop:20}}>
-        {demoProducts.map(p=> <ProductCard key={p.id} product={p} onAdd={handleAdd} />)}
-      </section>
     </div>
-  );
-}
+</div>
 
-// ----------------------- src/pages/Cart.js -----------------------
-import React, { useState } from "react";
+<script>
+    // --- Configuration du Chatbot ---
+    // Ce numéro WhatsApp recevra le récapitulatif de la demande.
+    const WHATSAPP_NUMBER = '242067698030';
+    
+    // Obtenez votre clé API sur Google AI Studio : https://aistudio.google.com/app/apikey
+    // REMPLACEZ 'VOTRE_CLE_API_ICI' par votre vraie clé API.
+    const API_KEY = "AIzaSyClNN5YQLhYmJHcB_6-PEhf6qeW5GTx-SA"; 
 
-export default function Cart({t}){
-  const [items, setItems] = useState([]); // demo: non persisté
-  const [address, setAddress] = useState({country:"Congo", city:"Brazzaville", quartier:"", rue:"", numero:""});
+    // Liste de vos services et des questions initiales
+    const services = {
+        'logo-creation': { name: "Création de Logo", questions: [
+            "Quel est le nom de l'entreprise ou de la marque ?",
+            "Quel est son secteur d'activité ?",
+            "Avez-vous des préférences de style (minimaliste, classique, moderne, etc.) ?",
+            "Y a-t-il des couleurs spécifiques que vous souhaitez inclure ou éviter ?",
+            "Y a-t-il un slogan ou un texte additionnel à ajouter ?",
+            "Quel est votre public cible ?",
+            "Quels sont vos principaux concurrents ?",
+            "Avez-vous un budget approximatif pour ce projet ?",
+            "Souhaitez-vous un logo avec un symbole ou uniquement du texte ?",
+            "Dans quels contextes ce logo sera-t-il utilisé (web, impression, produits) ?",
+        ]},
+        'photo-editing': { name: "Montage Photo", questions: [
+            "Combien de photos souhaitez-vous faire retoucher ?",
+            "Quel type de retouche souhaitez-vous (ajustement de couleur, suppression d'objets, retouche de portrait, etc.) ?",
+            "Avez-vous un délai spécifique pour ce projet ?",
+            "Pouvez-vous nous donner un exemple de style que vous aimez ?",
+            "Les photos seront-elles utilisées pour un usage personnel ou professionnel ?",
+            "Quel est le format de fichier souhaité (JPEG, PNG, RAW) ?",
+            "Souhaitez-vous des retouches sur des photos de produits ?",
+            "Avez-vous des instructions particulières pour chaque photo ?",
+            "Le projet nécessite-t-il la création d'un montage photo, comme un collage ?",
+            "Avez-vous des images de référence à nous montrer ?",
+        ]},
+        'video-editing': { name: "Montage Vidéo", questions: [
+            "Quelle est la durée approximative de la vidéo finale ?",
+            "Quel est le but de la vidéo (publicité, événement personnel, réseaux sociaux) ?",
+            "Disposez-vous déjà des images brutes à utiliser ? (Si non, nous pouvons vous en proposer)",
+            "Souhaitez-vous de la musique de fond, des effets sonores, ou des animations ?",
+            "Quelle est la résolution vidéo souhaitée (HD, 4K) ?",
+            "Quel est votre public cible ?",
+            "Avez-vous un script ou un storyboard ?",
+            "Y a-t-il un appel à l'action que vous souhaitez inclure à la fin de la vidéo ?",
+            "Souhaitez-vous des sous-titres ou du texte incrusté ?",
+            "Avez-vous des exemples de vidéos que vous aimez ?",
+        ]},
+        'online-ad': { name: "Affiche de Vente en Ligne", questions: [
+            "Quel produit ou service voulez-vous promouvoir ?",
+            "Quel est le message principal que vous souhaitez communiquer (promo, nouveau produit, événement) ?",
+            "Avez-vous des images ou un texte spécifique à utiliser ?",
+            "Pour quelle plateforme de réseaux sociaux est destinée cette affiche ?",
+            "Avez-vous des éléments de marque (logo, couleurs) à intégrer ?",
+            "Quel est le format de l'affiche (story, post, bannière) ?",
+            "Quel est votre budget pour la création ?",
+            "Quel est le ton de la campagne (professionnel, amusant, chic) ?",
+            "Souhaitez-vous plusieurs variations de l'affiche ?",
+            "Y a-t-il une date limite pour la création de cette affiche ?",
+        ]},
+        'custom-wallpaper': { name: "Fond d'Écran Personnalisé", questions: [
+            "Pour quel appareil est le fond d'écran (téléphone, ordinateur, tablette, etc.) ?",
+            "Quel est le thème ou le style que vous désirez (nature, abstrait, science-fiction, etc.) ?",
+            "Avez-vous des images, des citations ou des couleurs spécifiques à inclure ?",
+            "Quel est le format d'image souhaité (portrait, paysage) ?",
+            "Souhaitez-vous un style minimaliste ou détaillé ?",
+            "Le fond d'écran est-il pour un usage personnel ou commercial ?",
+            "Avez-vous une résolution d'écran spécifique ?",
+            "Y a-t-il un message ou un nom à inclure ?",
+            "Voulez-vous des effets de profondeur ou de 3D ?",
+            "Avez-vous des images de référence à nous montrer ?",
+        ]},
+        'invitation-card': { name: "Carte d'Invitation", questions: [
+            "Pour quel événement est la carte (anniversaire, mariage, événement d'entreprise) ?",
+            "Combien d'invités sont attendus ?",
+            "Quelles informations doivent être incluses (date, lieu, heure, dress code) ?",
+            "Quel est le style de l'événement (formel, décontracté, festif) ?",
+            "Quel est le format de la carte (numérique, physique) ?",
+            "Avez-vous des photos à inclure ?",
+            "Souhaitez-vous un thème de couleur particulier ?",
+            "Avez-vous des préférences typographiques ?",
+            "Y a-t-il des informations de contact pour les RSVP ?",
+            "Avez-vous des exemples de cartes que vous aimez ?",
+        ]},
+        'business-publicity': { name: "Publicité pour votre Business", questions: [
+            "Quel est le nom de votre entreprise ?",
+            "Quel est le produit ou service à promouvoir ?",
+            "Sur quelles plateformes souhaitez-vous la publicité (réseaux sociaux, affichage, impression) ?",
+            "Quel est le public cible de cette publicité (âge, localisation, intérêts) ?",
+            "Quel est votre message principal ou slogan ?",
+            "Avez-vous des images, vidéos ou un texte à utiliser ?",
+            "Quel est le budget alloué à cette campagne ?",
+            "Quels sont les objectifs de cette publicité (notoriété, ventes, trafic) ?",
+            "Souhaitez-vous que nous gérions la diffusion de la publicité également ?",
+            "Y a-t-il des délais à respecter pour le lancement ?",
+        ]},
+        'business-card': { name: "Carte de Visite", questions: [
+            "Quel nom et titre voulez-vous inclure ?",
+            "Quelles sont les coordonnées complètes (téléphone, email, adresse, site web) ?",
+            "Avez-vous un logo ou des préférences de design ?",
+            "Souhaitez-vous un format spécifique (rectangulaire, carré, etc.) ?",
+            "Voulez-vous des informations additionnelles au dos de la carte ?",
+            "Quel est le style que vous recherchez (professionnel, créatif, élégant) ?",
+            "Y a-t-il des couleurs de marque à respecter ?",
+            "Souhaitez-vous une carte de visite avec un code QR ?",
+            "Combien d'exemplaires souhaitez-vous ?",
+            "Quel est le délai de livraison souhaité ?",
+        ]},
+        'custom-contract': { name: "Création de Contrat sur Mesure", questions: [
+            "Quel est le but du contrat (prestation de service, vente, location) ?",
+            "Quelles sont les parties impliquées ?",
+            "Y a-t-il des clauses spécifiques que vous souhaitez ajouter ?",
+            "Avez-vous des documents ou des informations de référence ?",
+            "S'agit-il d'un contrat pour une seule transaction ou une relation à long terme ?",
+            "Quelle est la juridiction applicable ?",
+            "Avez-vous besoin d'une clause de confidentialité ?",
+            "Y a-t-il des modalités de paiement ou des échéances à spécifier ?",
+            "Le contrat doit-il être rédigé en une ou plusieurs langues ?",
+            "Avez-vous besoin d'une traduction certifiée si nécessaire ?",
+        ]},
+    };
 
-  function handlePay(){
-    // ouvre WhatsApp avec message de paiement (démo)
-    const phone = "+242XXXXXXXX"; // remplace par ton numéro MoMo/WhatsApp
-    const msg = `Je viens de payer pour mes achats. Adresse: ${address.country}, ${address.city}, ${address.quartier}, ${address.rue}, ${address.numero}`;
-    const url = `https://wa.me/${phone.replace("+","")}?text=` + encodeURIComponent(msg);
-    window.open(url, "_blank");
-  }
+    // --- Éléments du DOM ---
+    const welcomeView = document.getElementById('welcome-view');
+    const serviceButtonsContainer = document.getElementById('service-buttons');
+    const chatView = document.getElementById('chat-view');
+    const chatContainer = document.getElementById('chat-container');
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+    const summaryView = document.getElementById('summary-view');
+    const summaryDetails = document.getElementById('summary-details');
+    const whatsappLink = document.getElementById('whatsapp-link');
+    const backButton = document.getElementById('back-button');
 
-  return (
-    <div>
-      <h2 style={{color:"var(--gold)"}}>Panier</h2>
-      <div className="card" style={{marginTop:12}}>
-        <p className="small">Ici apparaîtront les articles ajoutés (demo: aucun article persistant)</p>
-        <div style={{marginTop:12}}>
-          <h4 className="small">Adresse de livraison</h4>
-          <input placeholder="Pays" value={address.country} onChange={e=>setAddress({...address,country:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
-          <input placeholder="Ville" value={address.city} onChange={e=>setAddress({...address,city:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
-          <input placeholder="Quartier" value={address.quartier} onChange={e=>setAddress({...address,quartier:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
-          <input placeholder="Rue" value={address.rue} onChange={e=>setAddress({...address,rue:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
-          <input placeholder="Numéro" value={address.numero} onChange={e=>setAddress({...address,numero:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
-          <div style={{marginTop:12,display:"flex",gap:8}}>
-            <button className="btn" onClick={handlePay}>Payer via WhatsApp / MoMo</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+    // --- État du Chatbot ---
+    let chatState = {
+        currentService: null,
+        currentQuestionIndex: -1,
+        answers: {},
+        chatHistory: [],
+        isAwaitingResponse: false,
+    };
 
-// ----------------------- src/pages/Admin.js -----------------------
-import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+    // --- Fonctions d'affichage ---
 
-export default function Admin({t}){
-  const [email,setEmail]=useState("");
-  const [pass,setPass]=useState("");
-  const [logged, setLogged] = useState(false);
-
-  async function handleLogin(){
-    try{
-      // NOTE: si Firebase Auth n'est pas configuré, ceci retournera une erreur
-      await signInWithEmailAndPassword(auth, email, pass);
-      setLogged(true);
-      alert("Connecté en tant qu'admin (si Firebase configuré).");
-    }catch(e){
-      console.error(e);
-      alert("Impossible de se connecter (vérifier la configuration Firebase et les identifiants).");
+    function renderServiceButtons() {
+        serviceButtonsContainer.innerHTML = '';
+        for (const key in services) {
+            const service = services[key];
+            const button = document.createElement('button');
+            button.className = 'aristocrate-button px-6 py-4 rounded-lg font-bold text-lg';
+            button.textContent = service.name;
+            button.dataset.serviceKey = key;
+            button.addEventListener('click', () => startChat(key));
+            serviceButtonsContainer.appendChild(button);
+        }
     }
-  }
 
-  return (
-    <div style={{maxWidth:720}}>
-      <h2 style={{color:"var(--gold)"}}>{t("adminLogin")}</h2>
-      {!logged ? (
-        <div className="card" style={{marginTop:12}}>
-          <input placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
-          <input placeholder="Mot de passe" value={pass} onChange={e=>setPass(e.target.value)} type="password" style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
-          <div style={{marginTop:12,display:"flex",gap:8}}>
-            <button className="btn" onClick={handleLogin}>Se connecter</button>
-          </div>
-          <p className="small" style={{marginTop:12}}>Compte admin par défaut : admin@ngchopi.com / motdepasse</p>
-        </div>
-      ) : (
-        <div className="card" style={{marginTop:12}}>
-          <h3 style={{color:"var(--gold)"}}>Tableau de bord (demo)</h3>
-          <p className="small">Ici tu pourras gérer produits, commandes et paramètres (implémentation à faire côté Firestore).</p>
-        </div>
-      )}
-    </div>
-  );
-}
+    function addMessage(message, sender = 'bot') {
+        const messageElement = document.createElement('div');
+        messageElement.className = `p-4 rounded-lg shadow-sm max-w-[85%] ${sender === 'bot' ? 'bg-gray-800 self-start text-gray-200' : 'bg-yellow-400 text-black self-end'}`;
+        messageElement.textContent = message;
+        chatContainer.appendChild(messageElement);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function showLoading(show = true) {
+        const loadingMessageId = 'loading-message';
+        let loadingElement = document.getElementById(loadingMessageId);
+        
+        if (show && !loadingElement) {
+            loadingElement = document.createElement('div');
+            loadingElement.id = loadingMessageId;
+            loadingElement.className = 'p-4 rounded-lg shadow-sm max-w-[85%] bg-gray-800 self-start text-gray-400 animate-pulse';
+            loadingElement.textContent = "L'assistant réfléchit...";
+            chatContainer.appendChild(loadingElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        } else if (!show && loadingElement) {
+            loadingElement.remove();
+        }
+    }
+    
+    function showErrorMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'p-4 rounded-lg shadow-sm max-w-[85%] self-start error-message';
+        messageElement.innerHTML = `<strong>Erreur:</strong> ${message}`;
+        chatContainer.appendChild(messageElement);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // --- Logique du Chatbot ---
+    function resetChat() {
+        // Réinitialise l'état du chat
+        chatState = {
+            currentService: null,
+            currentQuestionIndex: -1,
+            answers: {},
+            chatHistory: [],
+            isAwaitingResponse: false,
+        };
+
+        // Masque toutes les vues et n'affiche que la page d'accueil
+        welcomeView.classList.remove('hidden');
+        chatView.classList.add('hidden');
+        summaryView.classList.add('hidden');
+
+        // Masque le bouton de retour
+        backButton.classList.add('hidden');
+
+        // Vide le conteneur du chat
+        chatContainer.innerHTML = '';
+
+        // S'assure que les boutons des services sont bien affichés
+        renderServiceButtons();
+    }
+
+    function startChat(serviceKey) {
+        resetChat(); // S'assure de réinitialiser avant de commencer un nouveau chat
+        
+        chatState.currentService = serviceKey;
+        chatState.currentQuestionIndex = 0;
+        
+        welcomeView.classList.add('hidden');
+        chatView.classList.remove('hidden');
+        backButton.classList.remove('hidden');
+
+        const serviceName = services[serviceKey].name;
+        const firstQuestion = services[serviceKey].questions[0];
+
+        // Initialiser l'historique du chat pour l'IA
+        const initialPrompt = `Bonjour, je suis votre assistant virtuel pour le service "${serviceName}". Je vais vous poser quelques questions pour mieux comprendre votre projet. À la fin, je vous préparerai un récapitulatif à envoyer à un de nos experts. Veuillez répondre brièvement. Première question : ${firstQuestion}`;
+        chatState.chatHistory.push({ role: "user", parts: [{ text: initialPrompt }] });
+
+        addMessage(`Excellent choix ! Vous avez sélectionné le service : ${serviceName}.`, 'bot');
+        addMessage(`Bonjour, je suis votre assistant virtuel pour le service "${serviceName}". Nous allons discuter de votre projet. Pour commencer : ${firstQuestion}`, 'bot');
+        userInput.focus();
+    }
+
+    async function getLLMResponse(prompt) {
+        if (chatState.isAwaitingResponse) return;
+        chatState.isAwaitingResponse = true;
+        showLoading(true);
+
+        // Add user prompt to history
+        chatState.chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+        const payload = {
+            contents: chatState.chatHistory
+        };
+
+        if (API_KEY === "VOTRE_CLE_API_ICI" || !API_KEY) {
+            showErrorMessage("La clé API n'a pas été configurée. Veuillez remplacer le texte 'VOTRE_CLE_API_ICI' par votre vraie clé API dans le code.");
+            showLoading(false);
+            chatState.isAwaitingResponse = false;
+            return null;
+        }
+
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+        
+        console.log("Envoi de la requête à l'API avec le prompt:", chatState.chatHistory);
+
+        try {
+            let response = await fetchWithExponentialBackoff(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Erreur de l'API:", response.status, response.statusText, errorText);
+                showErrorMessage(`Connexion à l'API échouée. Erreur ${response.status}. Veuillez vérifier la console pour plus de détails.`);
+                return null;
+            }
+            
+            const result = await response.json();
+            
+            let botResponse = "Désolé, une erreur est survenue. Pourriez-vous reformuler ?";
+            if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+                botResponse = result.candidates[0].content.parts[0].text;
+            }
+            
+            chatState.chatHistory.push({ role: "model", parts: [{ text: botResponse }] });
+
+            return botResponse;
+
+        } catch (error) {
+            console.error("Erreur de l'appel API:", error);
+            showErrorMessage(`Une erreur est survenue. Veuillez vérifier la console pour plus de détails.`);
+            return null;
+        } finally {
+            showLoading(false);
+            chatState.isAwaitingResponse = false;
+        }
+    }
+
+    async function fetchWithExponentialBackoff(url, options, maxRetries = 5, delay = 1000) {
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const response = await fetch(url, options);
+                if (response.status !== 429) {
+                    return response;
+                }
+                console.warn(`Limite de requêtes API dépassée. Nouvelle tentative dans ${delay / 1000}s...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+                delay *= 2;
+            } catch (error) {
+                console.error("Échec de la récupération:", error);
+                throw error;
+            }
+        }
+        throw new Error(`Échec de la récupération après ${maxRetries} tentatives.`);
+    }
+
+    async function handleUserResponse() {
+        const response = userInput.value.trim();
+        if (response === '' || chatState.isAwaitingResponse) return;
+
+        addMessage(response, 'user');
+        
+        const questionsList = services[chatState.currentService].questions;
+        const questionKey = questionsList[chatState.currentQuestionIndex] || `Réponse libre ${chatState.currentQuestionIndex}`;
+        chatState.answers[questionKey] = response;
+        
+        userInput.value = '';
+
+        const totalQuestionsAnswered = Object.keys(chatState.answers).length;
+        const isCheckPoint = (totalQuestionsAnswered === 8) || (totalQuestionsAnswered > 8 && (totalQuestionsAnswered - 8) % 4 === 0);
+
+        let botPrompt;
+        if (response.toLowerCase().includes('terminer') || response.toLowerCase().includes('stop')) {
+            generateSummary();
+            return;
+        } else if (isCheckPoint) {
+            botPrompt = `L'utilisateur a répondu à la question "${questionKey}" par "${response}". C'est le moment de lui demander s'il a assez d'informations et s'il souhaite finaliser la demande. Si oui, dites-lui que vous allez préparer le récapitulatif. Si non, continuez à poser des questions pour affiner la demande.`;
+        } else if (chatState.currentQuestionIndex < questionsList.length - 1) {
+            chatState.currentQuestionIndex++;
+            botPrompt = `L'utilisateur a répondu à la question "${questionKey}" par "${response}". Posez la question suivante de manière concise : "${questionsList[chatState.currentQuestionIndex]}"`;
+        } else {
+            botPrompt = `L'utilisateur a répondu à toutes les questions de la liste. Sa dernière réponse est : "${response}". Posez une question libre pour obtenir plus de détails, ou proposez de finaliser le récapitulatif.`;
+        }
+
+        const botResponse = await getLLMResponse(botPrompt);
+        if (botResponse) {
+            addMessage(botResponse, 'bot');
+            if (botResponse.toLowerCase().includes('prêt à être envoyé') || botResponse.toLowerCase().includes('récapitulatif') || botResponse.toLowerCase().includes('terminons')) {
+                generateSummary();
+            }
+        }
+    }
+
+
+    function generateSummary() {
+        chatView.classList.add('hidden');
+        summaryView.classList.remove('hidden');
+        
+        const serviceName = services[chatState.currentService].name;
+        let summaryHTML = `<p><strong>Service demandé :</strong> ${serviceName}</p><hr class="my-2 border-gray-700">`;
+        let whatsappMessage = `*Nouvelle demande de service : ${serviceName}* ✨\n\n`;
+
+        for (const question in chatState.answers) {
+            const answer = chatState.answers[question];
+            summaryHTML += `<p><strong>${question}</strong><br>${answer}</p>`;
+            whatsappMessage += `*${question}*\n${answer}\n\n`;
+        }
+
+        summaryHTML += `<p class="mt-4">Un de nos experts vous répondra dans les plus brefs délais.</p>`;
+        summaryDetails.innerHTML = summaryHTML;
+        
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+        whatsappLink.href = whatsappUrl;
+        
+        backButton.classList.remove('hidden');
+    }
+
+    // --- Écouteurs d'événements ---
+    sendButton.addEventListener('click', handleUserResponse);
+    userInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            handleUserResponse();
+        }
+    });
+
+    backButton.addEventListener('click', resetChat);
+
+    // Initialisation de la page
+    document.addEventListener('DOMContentLoaded', () => {
+        renderServiceButtons();
+    });
+</script>
