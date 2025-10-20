@@ -1,658 +1,319 @@
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NG_chopi_DIAMS - Boutique de Luxe</title>
+// ----------------------- src/index.js -----------------------
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./index.css";
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  />
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(<App />);
 
-    <script src="https://cdn.tailwindcss.com"></script>
+// ----------------------- src/index.css -----------------------
+:root{
+  --primary:#111822;
+  --secondary:#333740;
+  --neutral:#6C6A6A;
+  --brownDark:#4F362A;
+  --brownSoft:#745850;
+  --gold:#F3B699;
+  --bg: var(--primary);
+  --text: #ffffff;
+}
 
-    <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            // 🎨 Palette NG_chopi_DIAMS
-            primary: "#111822", // Fond principal
-            secondary: "#333740", // Sections
-            neutral: "#6C6A6A", // Texte secondaire
-            brownDark: "#4F362A", // Accent chaud
-            brownSoft: "#745850", // Survol, ombres
-            gold: "#F3B699", // Accent luxe (boutons, logo)
-          },
-          fontFamily: {
-            sans: ["Poppins", "sans-serif"],
-          },
-          boxShadow: {
-            glow: "0 0 20px rgba(243, 182, 153, 0.3)",
-          },
-        },
-      },
-    };
-  </script>
-</head>
-<body class="bg-primary text-gray-100 font-sans">
-    <header class="bg-gradient-to-r from-black via-primary to-black border-b border-gold sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <h1 id="siteTitle" class="text-3xl font-bold text-gold">NG_chopi</h1>
-        <span id="siteSubtitle" class="text-gold font-semibold">DIAMS</span>
-      </div>
-      <nav class="hidden md:flex space-x-6">
-        <a href="#" id="navNew" class="text-gray-300 hover:text-gold">Nouveautés</a>
-        <a href="#" id="navWomen" class="text-gray-300 hover:text-gold">Femmes</a>
-        <a href="#" id="navMen" class="text-gray-300 hover:text-gold">Hommes</a>
-        <a href="#" id="navCollection" class="text-gold font-bold">COLLECTION</a>
-      </nav>
-      <div class="flex items-center space-x-4">
-        <button id="settingsBtn" class="text-gold hover:text-gold/80" title="Paramètres">⚙️</button>
-        <button id="adminBtn" class="text-gold hover:text-gold/80" title="Admin">🛠️</button>
-        <button id="cartBtn" class="relative text-gold hover:text-gold/80" title="Panier">🛒
-          <span id="cartCount" class="absolute -top-2 -right-2 bg-gold text-primary text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold hidden">0</span>
-        </button>
-      </div>
-    </div>
-  </header>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter, Poppins, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+body{background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+.container{max-width:1100px;margin:24px auto;padding:16px;}
+.card{background:var(--secondary);border-radius:16px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,0.6);}
+.btn{background:var(--gold);color:var(--primary);padding:10px 18px;border-radius:12px;border:none;font-weight:600;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,0.4);}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,0.6);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:linear-gradient(180deg,var(--primary),#0f1418);border-bottom:1px solid rgba(255,255,255,0.03);}
+.nav .brand{color:var(--gold);font-weight:800;font-size:20px;letter-spacing:0.6px;}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:18px;}
+.product img{width:100%;height:180px;object-fit:cover;border-radius:12px;}
+.product h3{color:var(--gold);margin:8px 0 4px;font-size:18px;}
+.small{color:var(--neutral);font-size:14px;}
+.cart-summary{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));padding:12px;border-radius:12px;}
+.footer{margin-top:28px;color:var(--neutral);text-align:center;font-size:13px;}
 
-    <section class="bg-gradient-to-r from-gold to-brownSoft text-primary py-16 text-center">
-    <div class="container mx-auto px-4">
-      <h2 id="heroTitle" class="text-4xl md:text-5xl font-bold mb-4">COLLECTION EXCLUSIVE</h2>
-      <p id="heroSubtitle" class="text-xl mb-8">Articles de luxe à prix exceptionnels</p>
-      <button id="heroButton" class="bg-primary text-gold px-8 py-3 rounded-full font-bold hover:bg-secondary transition shadow-lg">Découvrir</button>
-    </div>
-  </section>
+// ----------------------- src/firebaseConfig.js -----------------------
+/*
+  Firebase configuration (déjà fourni).
+  Si tu veux activer Firebase Auth / Firestore / Storage, vérifie la console Firebase
+  et configure les règles / utilisateurs.
+*/
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
-    <section class="container mx-auto px-4 py-12">
-    <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div>
-  </section>
+const firebaseConfig = {
+  apiKey: "AIzaSyA5nLBZ3E4t70TRj1woslLS6rIo5hrEoSY",
+  authDomain: "ng-chopi-diams-824fa.firebaseapp.com",
+  projectId: "ng-chopi-diams-824fa",
+  storageBucket: "ng-chopi-diams-824fa.firebasestorage.app",
+  messagingSenderId: "18876016875",
+  appId: "1:18876016875:web:ad2a6f936aae06096ff6ae"
+};
 
-    <div id="settingsPanel" class="fixed inset-0 bg-primary bg-opacity-90 z-50 hidden backdrop-blur-sm">
-    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-secondary/90 border-l border-gold overflow-y-auto"
-         style="background-image: url('https://placehold.co/600x1000/333740/F3B699?text=NG_chopi_DIAMS&font=poppins'); background-blend-mode: overlay; background-size: cover;">
-      <div class="p-6">
-        <div class="flex justify-between items-center mb-6">
-          <h2 id="settingsTitle" class="text-xl font-bold text-gold">Paramètres</h2>
-          <button id="closeSettings" class="text-gold hover:text-gold/80 text-2xl">✖️</button>
-        </div>
-        <div class="space-y-6">
-          <div>
-            <h3 id="languageLabel" class="text-lg font-semibold text-gold mb-3">Langue</h3>
-            <select id="languageSelector" class="w-full bg-primary border border-gold/30 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold">
-              <option value="fr">Français</option>
-              <option value="en">English</option>
-              <option value="ln">Lingala</option>
-            </select>
-          </div>
-          <button id="adminAccessBtn" class="w-full bg-gradient-to-r from-gold to-brownSoft text-primary py-3 rounded-lg font-bold hover:opacity-90 transition">Accès Administrateur</button>
-        </div>
-      </div>
-    </div>
-  </div>
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const storage = getStorage(app);
+export default app;
 
-    <div id="cartOverlay" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden backdrop-blur-sm">
-a <div class="absolute right-0 top-0 h-full w-full max-w-md bg-primary border-l border-gold overflow-y-auto">
-      <div class="p-6">
-        <div class="flex justify-between items-center mb-6">
-          <h2 id="cartTitle" class="text-xl font-bold text-gold">Votre Panier</h2>
-          <button id="closeCart" class="text-gold hover:text-gold/80 text-2xl">✖️</button>
-        </div>
-        <div id="cartItems" class="space-y-4 mb-6">
-          <p class="text-neutral text-center py-12" id="cartEmpty">Votre panier est vide</p>
-        </div>
-        <div class="border-t border-gold/30 pt-6">
-          <div class="flex justify-between items-center mb-6">
-            <span id="cartTotalLabel" class="text-lg font-semibold">Total:</span>
-            <span id="cartTotal" class="text-2xl font-bold text-gold">0 FCFA</span>
-          </div>
-          <div id="clientForm" class="hidden">
-            <div class="mb-4">
-              <label id="clientNameLabel" class="block text-gold mb-2">Nom et Prénom</label>
-              <input type="text" id="clientName" class="w-full bg-secondary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-            </div>
-            <div class="mb-4">
-              <label id="clientPhoneLabel" class="block text-gold mb-2">Numéro de téléphone</label>
-              <input type="tel" id="clientPhone" class="w-full bg-secondary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-            </div>
-            <div class="mb-4">
-              <label id="clientCityLabel" class="block text-gold mb-2">Ville</label>
-              <input type="text" id="clientCity" class="w-full bg-secondary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-            </div>
-            <div class="mb-4">
-              <label id="clientNeighborhoodLabel" class="block text-gold mb-2">Quartier</label>
-              <input type="text"id="clientNeighborhood" class="w-full bg-secondary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-            </div>
-            <div class="mb-6">
-              <label id="clientStreetLabel" class="block text-gold mb-2">Rue et Numéro</label>
-              <input type="text" id="clientStreet" class="w-full bg-secondary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-            </div>
-            <button id="confirmOrderBtn" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-bold hover:opacity-90 transition">Confirmer la commande</button>
-          </div>
-          <button id="validateOrderBtn" class="w-full bg-gradient-to-r from-gold to-brownSoft text-primary py-3 rounded-lg font-bold hover:opacity-90 transition">Valider votre commande</button>
-        </div>
-      </div>
-    </div>
-  </div>
+// ----------------------- src/i18n.js -----------------------
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
-    <div id="adminPanel" class="fixed inset-0 bg-primary z-50 overflow-y-auto hidden">
-    <div class="container mx-auto px-4 py-12">
-      <div class="flex justify-between items-center mb-12">
-        <h1 id="adminPanelTitle" class="text-3xl font-bold text-gold">Panel d'Administration</h1>
-        <button id="closeAdmin" class="text-gold hover:text-gold/80 px-4 py-2 border border-gold rounded-lg">Fermer</button>
-      </div>
-      <div class="bg-secondary rounded-lg p-6 mb-8">
-        <h2 id="productManagementTitle" class="text-xl font-bold text-gold mb-4">Gestion des Produits</h2>
-        <button id="addProductBtn" class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold mb-4">Nouveau produit</button>
-        <form id="adminProductForm" class="mb-6">
-          <input type="hidden" id="productId" />
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label id="productNameLabel" class="block text-gold mb-2">Nom du produit</label>
-              <input type="text" id="productName" class="w-full bg-primary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-            </div>
-            <div>
-              <label id="productCategoryLabel" class="block text-gold mb-2">Catégorie</label>
-              <select id="productCategory" class="w-full bg-primary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required>
-                <option value="Robes">Robes</option>
-                <option value="Hauts">Hauts</option>
-                <option value="Accessoires">Accessoires</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label id="productPriceLabel" class="block text-gold mb-2">Prix (FCFA)</label>
-              <input type="number" id="productPrice" class="w-full bg-primary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-            </div>
-            <div>
-              <label id="productOriginalPriceLabel" class="block text-gold mb-2">Prix original</label>
-              <input type="number" id="productOriginalPrice" class="w-full bg-primary border border-gold/30 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-            </div>
-          </div>
-          <div class="mb-4">
-            <label id="productImageLabel" class="block text-gold mb-2">URL de l'image</label>
-            <input type="text" id="productImage" class="w-full bg-primary border border-gold/30 rounded-lg px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-gold" required />
-          </div>
-          <div class="flex space-x-3">
-            <button id="saveProductBtn" type="submit" class="bg-gold text-primary px-6 py-2 rounded-lg font-bold">Enregistrer</button>
-            <button id="cancelEdit" type="button" class="bg-neutral text-white px-6 py-2 rounded-lg font-bold">Annuler</button>
-          </div>
-        </form>
-        <div class="bg-primary rounded-lg p-4 mb-4">
-          <h3 id="productListTitle" class="text-lg font-semibold text-gold mb-3">Liste des produits</h3>
-          <div id="adminProductsList" class="space-y-3"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+const resources = {
+  fr: { translation: {
+    welcome: "Bienvenue sur NG_chopi_DIAMS",
+    shopNow: "Acheter maintenant",
+    addToCart: "Ajouter au panier",
+    pay: "Payer par MoMo",
+    contact: "Contacter sur WhatsApp",
+    address: "Adresse de livraison",
+    adminLogin: "Connexion Admin",
+    cart: "Panier"
+  }},
+  en: { translation: {
+    welcome: "Welcome to NG_chopi_DIAMS",
+    shopNow: "Shop now",
+    addToCart: "Add to cart",
+    pay: "Pay with MoMo",
+    contact: "Contact on WhatsApp",
+    address: "Delivery address",
+    adminLogin: "Admin Login",
+    cart: "Cart"
+  }},
+  ln: { translation: {
+    welcome: "Boyei bolamu na NG_chopi_DIAMS",
+    shopNow: "Zua maki ya sikoyo",
+    addToCart: "Bakisa na panier",
+    pay: "Kobanda na MoMo",
+    contact: "Lobela na WhatsApp",
+    address: "Adresi ya kobakisa",
+    adminLogin: "Kokota na admin",
+    cart: "Panier"
+  }}
+};
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-// --------- Données Produits ---------
-let products = [
-  {
-    id: 1,
-    name: "Robe de Soirée Élégante",
-    price: 75000,
-    originalPrice: 95000,
-    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4f6e42aa-1393-409a-8d75-35dc173309c3.png",
-    category: "Robes",
-    rating: 4.8,
-  },
-  {
-    id: 2,
-    name: "Top Couture Premium",
-    price: 45000,
-    originalPrice: 65000,
-    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a1a416cf-2ed9-4826-b0fe-b0bf9ac24fba.png",
-    category: "Hauts",
-    rating: 4.6,
-  },
-  {
-    id: 3,
-    name: "Robe Cocktail Diamants",
-    price: 89000,
-    originalPrice: 120000,
-    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dc732eb3-2b4e-46f9-bca1-86c42649759c.png",
-    category: "Robes",
-    rating: 4.9,
-  },
-  {
-    id: 4,
-    name: "Montre Prestige Or",
-    price: 125000,
-    originalPrice: 180000,
-    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/58eefe4f-a865-4b1a-b96a-89a1659638b2.png",
-    category: "Accessoires",
-    rating: 5.0,
-  },
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "fr",
+  interpolation: { escapeValue: false }
+});
+export default i18n;
+
+// ----------------------- src/App.js -----------------------
+import React, { useState, useEffect } from "react";
+import "./i18n";
+import { useTranslation } from "react-i18next";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import Admin from "./pages/Admin";
+import ChatBot from "./components/ChatBot";
+
+function App(){
+  const { t } = useTranslation();
+  const [page, setPage] = useState("home");
+  useEffect(()=>{document.title="NG_chopi_DIAMS"},[]);
+
+  return (
+    <div className="min-h-screen" style={{background:"var(--primary)", color:"#fff"}}>
+      <Navbar setPage={setPage} />
+      <main className="container">
+        {page==="home" && <Home t={t} setPage={setPage} />}
+        {page==="cart" && <Cart t={t} setPage={setPage} />}
+        {page==="admin" && <Admin t={t} setPage={setPage} />}
+      </main>
+      <ChatBot />
+      <footer className="footer">© NG_chopi_DIAMS - Tous droits réservés</footer>
+    </div>
+  );
+}
+export default App;
+
+// ----------------------- src/components/Navbar.js -----------------------
+import React from "react";
+import { useTranslation } from "react-i18next";
+
+export default function Navbar({ setPage }){
+  const { i18n } = useTranslation();
+  return (
+    <nav className="nav">
+      <div className="brand" onClick={()=>setPage("home")}>NG_chopi_DIAMS</div>
+      <div style={{display:"flex",gap:12,alignItems:"center"}}>
+        <button className="btn" onClick={()=>setPage("cart")}>Panier</button>
+        <select defaultValue="fr" onChange={(e)=>i18n.changeLanguage(e.target.value)} style={{background:"transparent",color:"var(--gold)",border:"1px solid rgba(255,255,255,0.04)",padding:"6px 8px",borderRadius:8}}>
+          <option value="fr">FR</option>
+          <option value="en">EN</option>
+          <option value="ln">LN</option>
+        </select>
+        <button className="btn" onClick={()=>setPage("admin")} style={{background:"transparent",border:"1px solid var(--gold)",color:"var(--gold)"}}>Admin</button>
+      </div>
+    </nav>
+  );
+}
+
+// ----------------------- src/components/ChatBot.js -----------------------
+import React, { useState } from "react";
+
+export default function ChatBot(){
+  const [open,setOpen]=useState(false);
+  const [msg,setMsg]=useState("");
+  return (
+    <div style={{position:"fixed",right:18,bottom:18}}>
+      {open && (
+        <div className="card" style={{width:320}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <strong style={{color:"var(--gold)"}}>Support</strong>
+            <button onClick={()=>setOpen(false)} style={{background:"transparent",border:"none",color:"var(--neutral)"}}>×</button>
+          </div>
+          <div style={{marginTop:8}} className="small">Bonjour! Comment puis-je vous aider?</div>
+          <textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="Écrire..." style={{width:"100%",marginTop:8,borderRadius:8,padding:8,background:"#0e1418",color:"#fff",border:"1px solid rgba(255,255,255,0.03)"}}/>
+          <div style={{display:"flex",justifyContent:"flex-end",marginTop:8}}>
+            <button className="btn" onClick={()=>{ alert("Merci — le message n'est pas réellement envoyé dans cette version demo."); setMsg(""); }}>Envoyer</button>
+          </div>
+        </div>
+      )}
+      <button className="btn" onClick={()=>setOpen(s=>!s)}>{open?"Fermer":"Support"}</button>
+    </div>
+  );
+}
+
+// ----------------------- src/components/ProductCard.js -----------------------
+import React from "react";
+
+export default function ProductCard({product, onAdd}){
+  return (
+    <div className="product card">
+      <img src={product.image} alt={product.name} />
+      <h3>{product.name}</h3>
+      <div className="small">{product.desc}</div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:8}}>
+        <strong>{product.price} FCFA</strong>
+        <button className="btn" onClick={()=>onAdd(product)}>Ajouter</button>
+      </div>
+    </div>
+  );
+}
+
+// ----------------------- src/pages/Home.js -----------------------
+import React, { useState } from "react";
+import ProductCard from "../components/ProductCard";
+
+const demoProducts = [
+  {id:"1",name:"Bracelet DIAMS", desc:"Bracelet artisanal élégant", price:12000, image:"https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800&q=80"},
+  {id:"2",name:"Collier LUX", desc:"Collier doré raffiné", price:45000, image:"https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"},
+  {id:"3",name:"Boucles STAR", desc:"Boucles discrètes pour soirée", price:8000, image:"https://images.unsplash.com/photo-1541534401786-6e0f5f7c60d6?w=800&q=80"}
 ];
 
-// --------- Panier ---------
-let cart = [];
+export default function Home({t, setPage}){
+  const [cart, setCart] = useState([]);
+  function handleAdd(p){
+    setCart(prev=>[...prev,p]);
+    alert(p.name + " ajouté au panier");
+  }
+  return (
+    <div>
+      <header style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <div>
+          <h1 style={{color:"var(--gold)"}}>{t("welcome")}</h1>
+          <p className="small">Boutique officielle NG_chopi_DIAMS</p>
+        </div>
+        <div className="card cart-summary">
+          <div>Panier: {cart.length} article(s)</div>
+          <div style={{marginTop:8}}>
+            <button className="btn" onClick={()=>setPage("cart")}>Voir le panier</button>
+          </div>
+        </div>
+      </header>
 
-// --------- Affichage Produits ---------
-function displayProducts() {
-  const container = document.getElementById('productsContainer');
-  container.innerHTML = '';
-  products.forEach(product => {
-    const discount = Math.round((1 - product.price / product.originalPrice) * 100);
-    const div = document.createElement('div');
-    // Classes mises à jour avec le nouveau design
-    div.className = 'bg-secondary rounded-xl overflow-hidden border border-gold/20 shadow-lg hover:shadow-glow transition-all duration-300';
-    div.innerHTML = `
-      <div class="relative">
-        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover" />
-        ${discount > 0 ? `<span class="absolute top-3 left-3 bg-gold text-primary px-2 py-1 rounded text-xs font-bold">-${discount}%</span>` : ''}
-      </div>
-      <div class="p-4">
-        <h3 class="font-semibold mb-2 h-12">${product.name}</h3>
-        <div class="flex items-center mb-3">
-          ${Array(5).fill().map((_, i) => `<svg class="w-4 h-4 ${i < Math.floor(product.rating) ? 'text-gold' : 'text-neutral'}" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join('')}
-          <span class="text-xs text-neutral ml-2">${product.rating}</span>
-        </div>
-        <div class="flex justify-between items-center">
-          <div>
-            <p class="text-gold font-bold text-lg">${product.price.toLocaleString()} FCFA</p>
-            ${product.price < product.originalPrice ? `<p class="text-neutral text-sm line-through">${product.originalPrice.toLocaleString()} FCFA</p>` : ''}
-          </div>
-          <button class="bg-gold hover:bg-gold/80 text-primary px-4 py-2 rounded text-sm font-semibold add-to-cart" data-id="${product.id}">Ajouter</button>
-        </div>
-      </div>
-    `;
-    container.appendChild(div);
-  });
+      <section className="products" style={{marginTop:20}}>
+        {demoProducts.map(p=> <ProductCard key={p.id} product={p} onAdd={handleAdd} />)}
+      </section>
+    </div>
+  );
 }
 
-// --------- Mise à jour Panier ---------
-function updateCart() {
-  const cartItems = document.getElementById('cartItems');
-  cartItems.innerHTML = '';
-  if (cart.length === 0) {
-    cartItems.innerHTML = `<p class="text-neutral text-center py-12" id="cartEmpty">${translations[currentLang].cartEmpty}</p>`;
-    document.getElementById('cartCount').classList.add('hidden');
-    document.getElementById('cartTotal').textContent = '0 FCFA';
-    document.getElementById('validateOrderBtn').classList.add('hidden');
-    document.getElementById('clientForm').classList.add('hidden');
-    return;
-  }
-  document.getElementById('cartCount').classList.remove('hidden');
-  document.getElementById('validateOrderBtn').classList.remove('hidden');
+// ----------------------- src/pages/Cart.js -----------------------
+import React, { useState } from "react";
 
-  let total = 0;
-  let itemsCount = 0;
-  cart.forEach(item => {
-    total += item.price * item.quantity;
-    itemsCount += item.quantity;
-    const div = document.createElement('div');
-    div.className = 'flex justify-between items-center bg-secondary p-3 rounded-lg';
-    div.innerHTML = `
-      <div class="flex items-center space-x-3">
-        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded-md border border-gold/20" />
-        <div>
-          <p class="font-medium">${item.name}</p>
-          <p class="text-sm text-gold">${item.price.toLocaleString()} FCFA x ${item.quantity}</p>
-        </div>
-      </div>
-      <button class="text-red-400 hover:text-red-300 remove-from-cart" data-id="${item.id}">🗑️</button>
-    `;
-    cartItems.appendChild(div);
-  });
-  document.getElementById('cartCount').textContent = itemsCount;
-  document.getElementById('cartTotal').textContent = total.toLocaleString() + ' FCFA';
+export default function Cart({t}){
+  const [items, setItems] = useState([]); // demo: non persisté
+  const [address, setAddress] = useState({country:"Congo", city:"Brazzaville", quartier:"", rue:"", numero:""});
+
+  function handlePay(){
+    // ouvre WhatsApp avec message de paiement (démo)
+    const phone = "+242XXXXXXXX"; // remplace par ton numéro MoMo/WhatsApp
+    const msg = `Je viens de payer pour mes achats. Adresse: ${address.country}, ${address.city}, ${address.quartier}, ${address.rue}, ${address.numero}`;
+    const url = `https://wa.me/${phone.replace("+","")}?text=` + encodeURIComponent(msg);
+    window.open(url, "_blank");
+  }
+
+  return (
+    <div>
+      <h2 style={{color:"var(--gold)"}}>Panier</h2>
+      <div className="card" style={{marginTop:12}}>
+        <p className="small">Ici apparaîtront les articles ajoutés (demo: aucun article persistant)</p>
+        <div style={{marginTop:12}}>
+          <h4 className="small">Adresse de livraison</h4>
+          <input placeholder="Pays" value={address.country} onChange={e=>setAddress({...address,country:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
+          <input placeholder="Ville" value={address.city} onChange={e=>setAddress({...address,city:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
+          <input placeholder="Quartier" value={address.quartier} onChange={e=>setAddress({...address,quartier:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
+          <input placeholder="Rue" value={address.rue} onChange={e=>setAddress({...address,rue:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
+          <input placeholder="Numéro" value={address.numero} onChange={e=>setAddress({...address,numero:e.target.value})} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
+          <div style={{marginTop:12,display:"flex",gap:8}}>
+            <button className="btn" onClick={handlePay}>Payer via WhatsApp / MoMo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-// --------- Evenements Produits / Panier ---------
-document.getElementById('productsContainer').addEventListener('click', (e) => {
-  if (e.target.classList.contains('add-to-cart')) {
-    const productId = parseInt(e.target.getAttribute('data-id'));
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-    const cartItem = cart.find(item => item.id === productId);
-    if (cartItem) {
-      cartItem.quantity++;
-    } else {
-      cart.push({...product, quantity: 1});
-    }
-    updateCart();
-  }
-});
+// ----------------------- src/pages/Admin.js -----------------------
+import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
-// Gérer la suppression d'articles du panier
-document.getElementById('cartItems').addEventListener('click', (e) => {
-  if (e.target.classList.contains('remove-from-cart') || e.target.parentElement.classList.contains('remove-from-cart')) {
-    const btn = e.target.closest('.remove-from-cart');
-    const productId = parseInt(btn.getAttribute('data-id'));
-    const itemIndex = cart.findIndex(item => item.id === productId);
-    if (itemIndex > -1) {
-      cart[itemIndex].quantity--;
-      if (cart[itemIndex].quantity === 0) {
-        cart.splice(itemIndex, 1);
-      }
-    }
-    updateCart();
-  }
-});
+export default function Admin({t}){
+  const [email,setEmail]=useState("");
+  const [pass,setPass]=useState("");
+  const [logged, setLogged] = useState(false);
 
-document.getElementById('cartBtn').addEventListener('click', () => {
-  document.getElementById('cartOverlay').classList.remove('hidden');
-  updateCart();
-});
-document.getElementById('closeCart').addEventListener('click', () => {
-  document.getElementById('cartOverlay').classList.add('hidden');
-});
-document.getElementById('validateOrderBtn').addEventListener('click', () => {
-  document.getElementById('validateOrderBtn').classList.add('hidden');
-  document.getElementById('clientForm').classList.remove('hidden');
-});
-document.getElementById('confirmOrderBtn').addEventListener('click', () => {
-  const clientName = document.getElementById('clientName').value.trim();
-  const clientPhone = document.getElementById('clientPhone').value.trim();
-  const clientCity = document.getElementById('clientCity').value.trim();
-  const clientNeighborhood = document.getElementById('clientNeighborhood').value.trim();
-  const clientStreet = document.getElementById('clientStreet').value.trim();
-  if (!clientName || !clientPhone || !clientCity || !clientNeighborhood || !clientStreet) {
-    alert("Veuillez remplir tous les champs du formulaire");
-    return;
-  }
-  if (cart.length === 0) {
-    alert("Votre panier est vide");
-    return;
-  }
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const orderDetails = cart.map(item => `• ${item.name} (x${item.quantity}) - ${(item.price * item.quantity).toLocaleString()} FCFA`).join('\n');
-  const message = `🌟 Nouvelle commande NG_chopi_DIAMS 🌟\n\nCOMMANDE PREMIUM:\n${orderDetails}\n\nTOTAL: ${total.toLocaleString()} FCFA\n\nCLIENT:\nNom: ${clientName}\nTéléphone: ${clientPhone}\nAdresse: ${clientCity}, ${clientNeighborhood}, ${clientStreet}\n\nMerci pour votre commande !`;
-  const whatsappUrl = `https://wa.me/242064230404?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, '_blank');
-  cart = [];
-  updateCart();
-  document.getElementById('clientForm').classList.add('hidden');
-  document.getElementById('validateOrderBtn').classList.remove('hidden');
-  document.getElementById('cartOverlay').classList.add('hidden');
-  // Réinitialiser le formulaire
-  document.getElementById('clientName').value = '';
-  document.getElementById('clientPhone').value = '';
-  document.getElementById('clientCity').value = '';
-  document.getElementById('clientNeighborhood').value = '';
-  document.getElementById('clientStreet').value = '';
-});
+  async function handleLogin(){
+    try{
+      // NOTE: si Firebase Auth n'est pas configuré, ceci retournera une erreur
+      await signInWithEmailAndPassword(auth, email, pass);
+      setLogged(true);
+      alert("Connecté en tant qu'admin (si Firebase configuré).");
+    }catch(e){
+      console.error(e);
+      alert("Impossible de se connecter (vérifier la configuration Firebase et les identifiants).");
+    }
+  }
 
-// --------- Admin ---------
-document.getElementById('adminBtn').addEventListener('click', () => {
-  const code = prompt("Entrez le code d'accès à l'espace administrateur:");
-  if (code === "@inganibirds2007") {
-    document.getElementById('adminPanel').classList.remove('hidden');
-    loadAdminProducts();
-  } else {
-    alert("Code incorrect !");
-  }
-});
-document.getElementById('closeAdmin').addEventListener('click', () => {
-  document.getElementById('adminPanel').classList.add('hidden');
-});
-document.getElementById('addProductBtn').addEventListener('click', resetAdminForm);
-document.getElementById('cancelEdit').addEventListener('click', resetAdminForm);
-document.getElementById('adminProductForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const id = document.getElementById('productId').value;
-  const name = document.getElementById('productName').value.trim();
-  const price = parseInt(document.getElementById('productPrice').value);
-  const originalPrice = parseInt(document.getElementById('productOriginalPrice').value);
-  const image = document.getElementById('productImage').value.trim();
-  const category = document.getElementById('productCategory').value;
-  if (!name || !price || !originalPrice || !image || !category) {
-    alert("Veuillez remplir tous les champs");
-    return;
-  }
-  if (id) {
-    const index = products.findIndex(p => p.id == id);
-    if (index !== -1) {
-      products[index] = { id: Number(id), name, price, originalPrice, image, category, rating: products[index].rating || 4.5 };
-    }
-  } else {
-    products.push({ id: Date.now(), name, price, originalPrice, image, category, rating: 4.5 });
-  }
-  resetAdminForm();
-  loadAdminProducts();
-  displayProducts();
-});
-function resetAdminForm() {
-  document.getElementById('productId').value = '';
-  document.getElementById('adminProductForm').reset();
-  document.getElementById('saveProductBtn').textContent = translations[currentLang].saveBtn;
+  return (
+    <div style={{maxWidth:720}}>
+      <h2 style={{color:"var(--gold)"}}>{t("adminLogin")}</h2>
+      {!logged ? (
+        <div className="card" style={{marginTop:12}}>
+          <input placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
+          <input placeholder="Mot de passe" value={pass} onChange={e=>setPass(e.target.value)} type="password" style={{width:"100%",padding:8,borderRadius:8,marginTop:6,background:"#0b0f12",border:"1px solid rgba(255,255,255,0.03)",color:"#fff"}}/>
+          <div style={{marginTop:12,display:"flex",gap:8}}>
+            <button className="btn" onClick={handleLogin}>Se connecter</button>
+          </div>
+          <p className="small" style={{marginTop:12}}>Compte admin par défaut : admin@ngchopi.com / motdepasse</p>
+        </div>
+      ) : (
+        <div className="card" style={{marginTop:12}}>
+          <h3 style={{color:"var(--gold)"}}>Tableau de bord (demo)</h3>
+          <p className="small">Ici tu pourras gérer produits, commandes et paramètres (implémentation à faire côté Firestore).</p>
+        </div>
+      )}
+    </div>
+  );
 }
-function loadAdminProducts() {
-  const container = document.getElementById('adminProductsList');
-  container.innerHTML = '';
-  products.forEach(product => {
-    const div = document.createElement('div');
-    div.className = 'flex justify-between items-center bg-primary p-3 rounded-lg border border-gold/10';
-    div.innerHTML = `
-      <div class="flex items-center space-x-3">
-        <img src="${product.image}" alt="${product.name}" class="w-10 h-10 object-cover rounded-md" />
-        <div>
-          <h4 class="font-medium">${product.name}</h4>
-          <p class="text-sm text-gold">${product.price.toLocaleString()} FCFA</p>
-        </div>
-      </div>
-      <div class="flex space-x-2">
-        <button class="admin-edit-btn text-gold hover:text-gold/80" data-id="${product.id}">✏️</button>
-        <button class="admin-delete-btn text-red-400 hover:text-red-300" data-id="${product.id}">🗑️</button>
-      </div>
-    `;
-    container.appendChild(div);
-  });
-}
-document.getElementById('adminProductsList').addEventListener('click', e => {
-  if (e.target.classList.contains('admin-edit-btn') || e.target.parentElement.classList.contains('admin-edit-btn')) {
-    const btn = e.target.closest('.admin-edit-btn');
-    const id = parseInt(btn.getAttribute('data-id'));
-    const product = products.find(p => p.id === id);
-    if (!product) return;
-    document.getElementById('productId').value = product.id;
-    document.getElementById('productName').value = product.name;
-    document.getElementById('productPrice').value = product.price;
-    document.getElementById('productOriginalPrice').value = product.originalPrice;
-    document.getElementById('productImage').value = product.image;
-    document.getElementById('productCategory').value = product.category;
-    document.getElementById('saveProductBtn').textContent = "Modifier";
-    window.scrollTo(0, 0);
-  }
-  if (e.target.classList.contains('admin-delete-btn') || e.target.parentElement.classList.contains('admin-delete-btn')) {
-    const btn = e.target.closest('.admin-delete-btn');
-    const id = parseInt(btn.getAttribute('data-id'));
-    if (confirm("Voulez-vous vraiment supprimer ce produit ?")) {
-      products = products.filter(p => p.id !== id);
-      loadAdminProducts();
-      displayProducts();
-    }
-  }
-});
-
-// --------- Paramètres ---------
-document.getElementById('settingsBtn').addEventListener('click', () => {
-  document.getElementById('settingsPanel').classList.remove('hidden');
-});
-document.getElementById('closeSettings').addEventListener('click', () => {
-  document.getElementById('settingsPanel').classList.add('hidden');
-});
-document.getElementById('adminAccessBtn').addEventListener('click', () => {
-  document.getElementById('settingsPanel').classList.add('hidden');
-  const code = prompt("Entrez le code d'accès à l'espace administrateur:");
-  if (code === "@inganibirds2007") {
-    document.getElementById('adminPanel').classList.remove('hidden');
-    loadAdminProducts();
-  } else {
-    alert("Code incorrect !");
-  }
-});
-
-// --------- Multilingue ---------
-let currentLang = 'fr';
-const translations = {
-  fr: {
-    siteTitle: "NG_chopi",
-    siteSubtitle: "DIAMS",
-    navNew: "Nouveautés",
-    navWomen: "Femmes",
-    navMen: "Hommes",
-    navCollection: "COLLECTION",
-    heroTitle: "COLLECTION EXCLUSIVE",
-    heroSubtitle: "Articles de luxe à prix exceptionnels",
-    heroButton: "Découvrir",
-    cartEmpty: "Votre panier est vide",
-    cartTotalLabel: "Total:",
-    validateOrderBtn: "Valider votre commande",
-    confirmOrderBtn: "Confirmer la commande",
-    settingsTitle: "Paramètres",
-    languageLabel: "Langue",
-    adminAccessBtn: "Accès Administrateur",
-    cartTitle: "Votre Panier",
-    clientNameLabel: "Nom et Prénom",
-    clientPhoneLabel: "Numéro de téléphone",
-    clientCityLabel: "Ville",
-    clientNeighborhoodLabel: "Quartier",
-    clientStreetLabel: "Rue et Numéro",
-    adminPanelTitle: "Panel d'Administration",
-    productManagementTitle: "Gestion des Produits",
-    addProductBtn: "Nouveau produit",
-    productNameLabel: "Nom du produit",
-    productCategoryLabel: "Catégorie",
-    productPriceLabel: "Prix (FCFA)",
-    productOriginalPriceLabel: "Prix original",
-    productImageLabel: "URL de l'image",
-    saveBtn: "Enregistrer",
-    cancelBtn: "Annuler",
-    productListTitle: "Liste des produits",
-  },
-  en: {
-    siteTitle: "NG_chopi",
-    siteSubtitle: "DIAMS",
-    navNew: "New",
-    navWomen: "Women",
-    navMen: "Men",
-    navCollection: "COLLECTION",
-    heroTitle: "EXCLUSIVE COLLECTION",
-    heroSubtitle: "Luxury items at exceptional prices",
-    heroButton: "Discover",
-    cartEmpty: "Your cart is empty",
-    cartTotalLabel: "Total:",
-    validateOrderBtn: "Validate your order",
-    confirmOrderBtn: "Confirm order",
-    settingsTitle: "Settings",
-    languageLabel: "Language",
-    adminAccessBtn: "Admin Access",
-    cartTitle: "Your Cart",
-    clientNameLabel: "Full Name",
-    clientPhoneLabel: "Phone number",
-    clientCityLabel: "City",
-    clientNeighborhoodLabel: "Neighborhood",
-    clientStreetLabel: "Street and Number",
-    adminPanelTitle: "Admin Panel",
-    productManagementTitle: "Product Management",
-    addProductBtn: "New product",
-    productNameLabel: "Product name",
-    productCategoryLabel: "Category",
-    productPriceLabel: "Price (FCFA)",
-    productOriginalPriceLabel: "Original price",
-    productImageLabel: "Image URL",
-    saveBtn: "Save",
-    cancelBtn: "Cancel",
-    productListTitle: "Product list",
-  },
-  ln: {
-    siteTitle: "NG_chopi",
-    siteSubtitle: "DIAMS",
-    navNew: "Ya sika",
-    navWomen: "Basi",
-    navMen: "Mibali",
-    navCollection: "COLLECTION",
-    heroTitle: "COLLECTION YA MOTUYA",
-    heroSubtitle: "Biloko ya luxe na ntalo kitoko",
-    heroButton: "Tala",
-    cartEmpty: "Panier na yo ezali polele",
-    cartTotalLabel: "Total:",
-    validateOrderBtn: "Ndimisa commande",
-    confirmOrderBtn: "Tinda commande",
-    settingsTitle: "Paramètres",
-    languageLabel: "Lokota",
-    adminAccessBtn: "Accès Admin",
-    cartTitle: "Panier na Yo",
-    clientNameLabel: "Nkombo na yo",
-    clientPhoneLabel: "Numéro ya téléphone",
-    clientCityLabel: "Mboka",
-    clientNeighborhoodLabel: "Quartier",
-    clientStreetLabel: "Balabala mpe Numéro",
-    adminPanelTitle: "Panel Admin",
-    productManagementTitle: "Gestion ya biloko",
-    addProductBtn: "Eloko ya sika",
-    productNameLabel: "Nkombo ya eloko",
-    productCategoryLabel: "Catégorie",
-    productPriceLabel: "Ntalo (FCFA)",
-    productOriginalPriceLabel: "Ntalo ya yambo",
-    productImageLabel: "URL ya elilingi",
-    saveBtn: "Bomba",
-    cancelBtn: "Zongisa",
-    productListTitle: "Liste ya biloko",
-  }
-};
-function updateLanguage(lang) {
-  currentLang = lang;
-  const t = translations[lang];
-  
-  document.getElementById('siteTitle').textContent = t.siteTitle;
-  document.getElementById('siteSubtitle').textContent = t.siteSubtitle;
-  document.getElementById('navNew').textContent = t.navNew;
-  document.getElementById('navWomen').textContent = t.navWomen;
-  document.getElementById('navMen').textContent = t.navMen;
-  document.getElementById('navCollection').textContent = t.navCollection;
-  
-  document.getElementById('heroTitle').textContent = t.heroTitle;
-  document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
-  document.getElementById('heroButton').textContent = t.heroButton;
-  
-  document.getElementById('cartEmpty').textContent = t.cartEmpty;
-  document.getElementById('cartTotalLabel').textContent = t.cartTotalLabel;
-  document.getElementById('validateOrderBtn').textContent = t.validateOrderBtn;
-  document.getElementById('confirmOrderBtn').textContent = t.confirmOrderBtn;
-  
-  document.getElementById('settingsTitle').textContent = t.settingsTitle;
-  document.getElementById('languageLabel').textContent = t.languageLabel;
-  document.getElementById('adminAccessBtn').textContent = t.adminAccessBtn;
-  
-  document.getElementById('cartTitle').textContent = t.cartTitle;
-  document.getElementById('clientNameLabel').textContent = t.clientNameLabel;
-  document.getElementById('clientPhoneLabel').textContent = t.clientPhoneLabel;
-  document.getElementById('clientCityLabel').textContent = t.clientCityLabel;
-  document.getElementById('clientNeighborhoodLabel').textContent = t.clientNeighborhoodLabel;
-  document.getElementById('clientStreetLabel').textContent = t.clientStreetLabel;
-  
-  document.getElementById('adminPanelTitle').textContent = t.adminPanelTitle;
-  document.getElementById('productManagementTitle').textContent = t.productManagementTitle;
-  document.getElementById('addProductBtn').textContent = t.addProductBtn;
-  document.getElementById('productNameLabel').textContent = t.productNameLabel;
-  document.getElementById('productCategoryLabel').textContent = t.productCategoryLabel;
-  document.getElementById('productPriceLabel').textContent = t.productPriceLabel;
-  document.getElementById('productOriginalPriceLabel').textContent = t.productOriginalPriceLabel;
-  document.getElementById('productImageLabel').textContent = t.productImageLabel;
-s document.getElementById('saveProductBtn').textContent = t.saveBtn;
-  document.getElementById('cancelEdit').textContent = t.cancelBtn;
-  document.getElementById('productListTitle').textContent = t.productListTitle;
-}
-document.getElementById('languageSelector').addEventListener('change', e => {
-  updateLanguage(e.target.value);
-});
-
-// --------- Initialisation ---------
-displayProducts();
-updateCart();
-updateLanguage('fr'); // Définit la langue par défaut au chargement
-});
-</script>
-</body>
-</html>
